@@ -558,7 +558,6 @@ app.u.handleCallback(tagObj);
 			},
 			
 
-
 //jump to an anchor. can use a name='' or id=''.  anchor is used in function name because that's the common name for this type of action. do not need to pass # sign.
 		jumpToAnchor : function(id)	{
 			window.location.hash=id;
