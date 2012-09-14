@@ -126,6 +126,7 @@ else if ("onhashchange" in window)	{ // does the browser support the hashchange 
 		}
 	}
 else	{
+	app.u.throwMessage("You appear to be running a very old browser. Our app will run, but may not be an optimal experience.");
 	// wow. upgrade your browser. should only get here if older than:
 	// Google Chrome 5, Safari 5, Opera 10.60, Firefox 3.6 and Internet Explorer 8 
 	}
@@ -137,6 +138,7 @@ else	{
 //get list of categories and append to DOM IF parent id exists
 				app.ext.store_navcats.calls.appCategoryList.init({"callback":"showRootCategories","extension":"myRIA"},'passive');
 //get homepage info passively. do it later so that if it is already requested as part of another process, no double request occurs.
+//no need to dispatch it because passive dispatch runs on a setInterval.
 				setTimeout(function(){
 					app.ext.store_navcats.calls.appCategoryDetailMax.init('.',{},'passive');
 					},7000); //throw this into the q to have handy. do it later 
@@ -161,16 +163,16 @@ else	{
 
 //adds submit functionality to search form. keeps dom clean to do it here.
 				app.ext.myRIA.u.bindAppViewForms();
-				
+				app.ext.myRIA.vars.mcSetInterval = setInterval(app.ext.myRIA.u.handleMinicartUpdate,4000,'cartItemsList')
 				showContent = app.ext.myRIA.a.showContent; //a shortcut for easy execution.
 				quickView = app.ext.myRIA.a.quickView; //a shortcut for easy execution.
 				
 				app.ext.myRIA.u.bindNav('#appView .bindByAnchor');
-
-app.ext.store_checkout.checkoutCompletes.push(function(P){
-	app.u.dump("WOOT! to to checkoutComplete");
-	app.u.dump(P);
-	})
+//not sure why this was here. think it was to test something. commented out on 2012-09-13
+//app.ext.store_checkout.checkoutCompletes.push(function(P){
+//	app.u.dump("WOOT! to to checkoutComplete");
+//	app.u.dump(P);
+//	})
 				
 				$('.disableAtStart').removeAttr('disabled').removeAttr('disableAtStart'); //set disabledAtStart on elements that should be disabled prior to init completing.
 
@@ -2164,16 +2166,22 @@ return r;
 				
 //app.ext.myRIA.u.handleMinicartUpdate();			
 			handleMinicartUpdate : function(tagObj)	{
-
-				var itemCount = app.u.isSet(app.data[tagObj.datapointer].cart['data.item_count']) ? app.data[tagObj.datapointer].cart['data.item_count'] : app.data[tagObj.datapointer].cart['data.add_item_count']
-//				app.u.dump(" -> itemCount: "+itemCount);
-//used for updating minicarts.
-				$('.cartItemCount').text(itemCount);
-				var subtotal = app.u.isSet(app.data[tagObj.datapointer].cart['data.order_subtotal']) ? app.data[tagObj.datapointer].cart['data.order_subtotal'] : 0;
-				var total = app.u.isSet(app.data[tagObj.datapointer].cart['data.order_total']) ? app.data[tagObj.datapointer].cart['data.order_total'] : 0;
-				$('.cartSubtotal').text(app.u.formatMoney(subtotal,'$',2,false));
-				$('.cartTotal').text(app.u.formatMoney(total,'$',2,false));
-
+//				app.u.dump("BEGIN myRIA.u.handleMinicartUPdate");
+				var r = false; //what's returned. t for cart updated, f for no update.
+				if(app.data[tagObj.datapointer])	{
+					var $appView = $('#appView');
+					r = true;
+					var itemCount = app.u.isSet(app.data[tagObj.datapointer].cart['data.item_count']) ? app.data[tagObj.datapointer].cart['data.item_count'] : app.data[tagObj.datapointer].cart['data.add_item_count']
+	//				app.u.dump(" -> itemCount: "+itemCount);
+	//used for updating minicarts.
+					$('.cartItemCount',$appView).text(itemCount);
+					var subtotal = app.u.isSet(app.data[tagObj.datapointer].cart['data.order_subtotal']) ? app.data[tagObj.datapointer].cart['data.order_subtotal'] : 0;
+					var total = app.u.isSet(app.data[tagObj.datapointer].cart['data.order_total']) ? app.data[tagObj.datapointer].cart['data.order_total'] : 0;
+					$('.cartSubtotal',$appView).text(app.u.formatMoney(subtotal,'$',2,false));
+					$('.cartTotal',$appView).text(app.u.formatMoney(total,'$',2,false));
+					}
+				//no error for cart data not being present. It's a passive function.
+				return r;
 				},
 
 			createTemplateFunctions : function()	{
