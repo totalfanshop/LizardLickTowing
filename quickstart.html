@@ -483,10 +483,7 @@ you'll likely want to something MUCH more custom here. this just simply adds it 
 </table>
 <!-- must be outside table, otherwise width goes way wide -->
 <div id='prodlistRelatedContainer'>
-	<div class='redGrit prodlistHead'>
-		<span class='hbSpriteBG relatedItemsHead'></span>
-	</div>
-	<ul id='prodlistRelated' class='listStyleNone fluidList clearfix noPadOrMargin productList' data-bind="var: product(zoovy:related_products); format:productList; extension:store_prodlist;loadsTemplate:productListTemplate;hide_multipage_controls:true;hide_multipage:true;  withReviews:1"></ul>
+	<ul id='prodlistRelated' class='listStyleNone fluidList clearfix noPadOrMargin productList' data-bind="var: product(zoovy:related_products); format:productList; extension:store_prodlist;loadsTemplate:productListTemplate;hide_multipage_controls:true;hide_multipage:true; before:<h2>Similar Items</h2>; withReviews:1"></ul>
 </div>
 
 
@@ -495,7 +492,7 @@ you'll likely want to something MUCH more custom here. this just simply adds it 
 
 
 
-
+<!-- a template used for a quickview link off of a category page -->
 <div id='productTemplateQuickView'>
 
 <table class='prodViewerContainer'>
@@ -817,6 +814,34 @@ adding classes is not likely to have any bad effects.
 
 
 
+<div id='searchTemplate' class='searchResultsPage clearfix'>
+
+	<div class='sideline' id='sideline'>
+	<nav id='searchNav'>
+	<ul class='listStyleNone noPadOrMargin'><!--
+		<li id='altSearchesContainer'>
+		<h3 class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-top '>Alternative Searches</h3>
+		<ul id='altSearchesList' class='ui-corner-bottom ui-accordion-content ui-helper-reset ui-widget-content'></ul>
+		</li>
+	-->
+		<li id='recentSearchesContainer'>
+		<h3 class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-top '>Recent Searches</h3>
+		<ul id='recentSearchesList' class='ui-corner-bottom ui-accordion-content ui-helper-reset ui-widget-content'></ul>
+		</li>
+	</ul>
+	</nav>
+	</div>
+	
+	<div class='mainColumn'>
+	<section id='resultsProdlist'>
+		<ul id='resultsProductListContainer' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>	
+	</section>
+	</div>
+</div>
+
+
+
+
 
 
 
@@ -867,34 +892,6 @@ onclicks are recursive, so only add it to the parent element.
 
 
 
-
-
-
-
-<div id='searchTemplate' class='searchResultsPage clearfix'>
-
-	<div class='sideline' id='sideline'>
-	<nav id='searchNav'>
-	<ul class='listStyleNone noPadOrMargin'><!--
-		<li id='altSearchesContainer'>
-		<h3 class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-top '>Alternative Searches</h3>
-		<ul id='altSearchesList' class='ui-corner-bottom ui-accordion-content ui-helper-reset ui-widget-content'></ul>
-		</li>
-	-->
-		<li id='recentSearchesContainer'>
-		<h3 class='ui-accordion-header ui-helper-reset ui-state-default ui-corner-top '>Recent Searches</h3>
-		<ul id='recentSearchesList' class='ui-corner-bottom ui-accordion-content ui-helper-reset ui-widget-content'></ul>
-		</li>
-	</ul>
-	</nav>
-	</div>
-	
-	<div class='mainColumn'>
-	<section id='resultsProdlist'>
-		<ul id='resultsProductListContainer' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>	
-	</section>
-	</div>
-</div>
 
 
 
@@ -1040,13 +1037,6 @@ So the cart template should contain these two elements and the extension should 
 
 
 
-
-
-
-
-
-
-
 <!--
 used on a product layout. Some product have 'children' which may represent the same item in a different color (variations are commonly used for sizing)
 -->
@@ -1150,6 +1140,9 @@ used for store_crm.js
 
 </form>
 </div>
+
+
+
 
 
 <div id='subscribeFormTemplate'>
@@ -1381,20 +1374,6 @@ The 'data-action' attribute is used to assign an onclick.
 
 	</div>
 </address>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

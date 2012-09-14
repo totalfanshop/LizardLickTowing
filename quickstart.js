@@ -26,7 +26,38 @@ var myRIA = function() {
 	vars : {
 //a list of the templates used by this extension.
 //if this is a custom extension and you are loading system extensions (prodlist, etc), then load ALL templates you'll need here.
-		"templates" : ['productTemplate','mpControlSpec','categoryTemplate','categoryListTemplate','productListTemplate','productListTemplateATC','cartTemplate','productListTemplateCart','productListTemplateChildren','productReviewsTemplateDetail','reviewFrmTemplate','subscribeFormTemplate','breadcrumbTemplate','orderLineItemTemplate','orderContentsTemplate','productListTemplateInvoice','companyTemplate','customerTemplate','homepageTemplate','searchTemplate','faqTopicTemplate','faqQnATemplate','billAddressTemplate','shipAddressTemplate','productListTemplateResults','categoryListTemplateRootCats','pageNotFoundTemplate'],
+		"templates" : [
+//the list of templates that are commonly edited (same order as they appear in appTemplates
+			'homepageTemplate',	'categoryTemplate',
+			'categoryListTemplate',
+			'categoryListTemplateRootCats',
+			'productListTemplate',
+			'productListTemplateATC',
+			'productListTemplateBuyerList',
+			'productListTemplateResults',
+			'productTemplate',
+			'productTemplateQuickView',
+			'pageNotFoundTemplate',
+//the list of templates that, in most cases, are left alone. Also in the same order as appTemplates
+			'breadcrumbTemplate',
+			'companyTemplate',
+			'customerTemplate',
+			'searchTemplate',
+			'mpControlSpec',
+			'cartTemplate',
+			'productListTemplateCart',
+			'productListTemplateChildren',
+			'productReviewsTemplateDetail',
+			'imageViewerTemplate',
+			'reviewFrmTemplate',
+			'subscribeFormTemplate',
+			'orderLineItemTemplate',
+			'orderContentsTemplate',
+			'productListTemplateInvoice',
+			'faqTopicTemplate',
+			'faqQnATemplate',
+			'billAddressTemplate',
+			'shipAddressTemplate'],
 		"session" : {
 			"recentSearches" : [],
 			"recentlyViewedItems" : [],
