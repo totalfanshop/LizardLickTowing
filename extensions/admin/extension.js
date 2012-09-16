@@ -403,6 +403,7 @@ app.ext.admin.u.changeFinderButtonsState('enable'); //make buttons clickable
 				//go through the results and if they are already in this category, disable drag n drop.
 				$results = $('#finderSearchResults');
 				//.find( "li" ).addClass( "ui-corner-all" ) )
+
 				$results.find('li').each(function(){
 					$tmp = $(this);
 					if($('#finderTargetList_'+$tmp.attr('data-pid')).length > 0)	{
@@ -756,9 +757,10 @@ $('#finderSearchForm').submit(function(event){
 				var $tmp;
 //go through the results and if they are already in this category, disable drag n drop.
 				$results = $('#finderSearchResults');
+				var sku = $results.closest('[data-sku]').attr('data-sku');
 				$results.find('li').each(function(){
 					$tmp = $(this);
-					if($('#finderTargetList_'+$tmp.attr('data-pid')).length > 0)	{
+					if($('#finderTargetList_'+$tmp.attr('data-pid')).length > 0 || $tmp.attr('data-pid') == sku)	{
 //						app.u.dump(" -> MATCH! disable dragging.");
 						$tmp.addClass('ui-state-disabled');
 						}
