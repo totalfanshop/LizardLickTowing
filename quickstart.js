@@ -100,7 +100,7 @@ var myRIA = function() {
 
 		startMyProgram : {
 			onSuccess : function()	{
-			app.u.dump("BEGIN myRIA.callback.startMyProgram");
+//			app.u.dump("BEGIN myRIA.callback.startMyProgram");
 //			app.u.dump(" -> window.onpopstate: "+typeof window.onpopstate);
 //			app.u.dump(" -> window.history.pushState: "+typeof window.history.pushState);
 //This will create the arrays for the template[templateID].onCompletes and onInits
@@ -145,7 +145,7 @@ else	{
 				
 				if(app && app.u && typeof app.u.appInitComplete == 'function'){app.u.appInitComplete()}; //gets run prior to any page content so that it can be used to add renderformats of template functions.
 
-				var page = app.ext.myRIA.u.handleAppInit({"skipClearMessaging":true}); //checks url and will load appropriate page content. returns object {pageType,pageInfo}
+				var page = app.ext.myRIA.u.handleAppInit(); //checks url and will load appropriate page content. returns object {pageType,pageInfo}
 
 //get some info to have handy for when needed (cart, profile, etc)
 				app.calls.appProfileInfo.init(app.vars.profile,{},'passive');
@@ -192,13 +192,17 @@ else	{
 				setTimeout(function(){
 					$("#"+htmlid).slideUp(1000);
 					},5000);
+			
+				_gaq.push(['_trackEvent','Add to cart','User Event','success',app.data[tagObj.datapointer].product1]);
+			
 				},
 			onError : function(responseData,uuid)	{
 				app.u.dump('BEGIN app.ext.myRIA.callbacks.itemAddedToCart.onError');
 //				app.u.dump(responseData);
 				$('.addToCartButton').removeAttr('disabled').removeClass('disabled').removeClass('ui-state-disabled'); //remove the disabling so users can push the button again, if need be.
 				responseData.parentID = 'atcMessaging_'+responseData.product1
-				app.u.throwMessage(responseData)
+				app.u.throwMessage(responseData);
+				_gaq.push(['_trackEvent','Add to cart','User Event','fail',app.data[tagObj.datapointer].product1]);
 				}
 			}, //itemAddedToCart
 			
@@ -442,18 +446,23 @@ else	{
 		showBuyerLists : {
 			onSuccess : function(tagObj)	{
 //				app.u.dump('BEGIN app.ext.myRIA.showList.onSuccess ');
-var $parent = $('#'+tagObj.parentID);
-var $ul = app.ext.store_crm.u.getBuyerListsAsUL(tagObj.datapointer);
-var numRequests = 0;
-$ul.children().each(function(){
-	var $li = $(this);
-	var listID = $li.data('buyerlistid');
-	$li.wrapInner("<a href='#"+listID+"Contents'></a>"); //adds href for tab selection
-	$parent.append($("<div>").attr({'id':listID+'Contents','data-buyerlistid':listID}).append($("<ul>").addClass('listStyleNone clearfix noPadOrMargin lineItemProdlist').attr('id','prodlistBuyerList_'+listID))); //containers for list contents and ul for productlist
-	numRequests += app.ext.store_crm.calls.buyerProductListDetail.init(listID,{'callback':'buyerListAsProdlist','extension':'myRIA','parentID':'prodlistBuyerList_'+listID})
-	});
-$parent.removeClass('loadingBG').prepend($ul).tabs();
-app.model.dispatchThis('mutable');
+var $parent = $('#'+tagObj.parentID).removeClass('loadingBG');
+if(app.data[tagObj.datapointer]['@lists'].length > 0)	{
+	var $ul = app.ext.store_crm.u.getBuyerListsAsUL(tagObj.datapointer);
+	var numRequests = 0;
+	$ul.children().each(function(){
+		var $li = $(this);
+		var listID = $li.data('buyerlistid');
+		$li.wrapInner("<a href='#"+listID+"Contents'></a>"); //adds href for tab selection
+		$parent.append($("<div>").attr({'id':listID+'Contents','data-buyerlistid':listID}).append($("<ul>").addClass('listStyleNone clearfix noPadOrMargin lineItemProdlist').attr('id','prodlistBuyerList_'+listID))); //containers for list contents and ul for productlist
+		numRequests += app.ext.store_crm.calls.buyerProductListDetail.init(listID,{'callback':'buyerListAsProdlist','extension':'myRIA','parentID':'prodlistBuyerList_'+listID})
+		});
+	$parent.prepend($ul).tabs();
+	app.model.dispatchThis('mutable');
+	}
+else	{
+	$parent.append("You have no lists at this time. Add an item to your wishlist to get started...");
+	}
 				}
 			}, //showBuyerList
 
@@ -927,6 +936,7 @@ else	{
 					else	{
 						app.u.throwGMessage("Based on pageType, some other variable is required (ex: pid for pageType = product). P follows: "); app.u.dump(P);
 						}
+					_gaq.push(['_trackEvent','Quickview','User Event','product',P.pid]);
 					}
 				else	{
 					app.u.throwGMessage("P should contain pageType and templateID. "); app.u.dump(P);
@@ -945,6 +955,7 @@ P.listID (buyer list id)
 					app.ext.store_crm.calls.buyerProductListDetail.init(P.listID,{},'immutable'); //update list in memory
 					app.model.dispatchThis('immutable');
 					if(tagObj.parentID) {$('#'+tagObj.parentID).empty().remove();}
+					_gaq.push(['_trackEvent','Manage buyer list','User Event','item removed',P.stid]);
 					}
 				else	{
 					app.u.throwGMessage("ERROR! either stid ["+P.stid+"] or listID ["+P.listID+"] not passed into myRIA.a.removeItemFromBuyerList.",P.parentID)
@@ -969,7 +980,7 @@ P.listID (buyer list id)
 				else if(document.all)// ie
 					window.external.AddFavorite(url, title);
 	
-	
+				
 				},
 
 			printByElementID : function(id)	{
@@ -1032,6 +1043,7 @@ P.listID (buyer list id)
 					app.u.throwMessage(msg);
 					app.ext.store_crm.calls.buyerProductListAppendTo.init(P,{'parentID':parentID,'callback':'showMessaging','message':'Item '+P.pid+' successfully added to list: '+P.listid},'immutable');
 					app.model.dispatchThis('immutable');
+					_gaq.push(['_trackEvent','Manage buyer list','User Event','item added',P.pid]);
 					}
 				},
 
@@ -1046,7 +1058,7 @@ P.listID (buyer list id)
 				var templateID = 'faqQnATemplate'
 				var $target = $('#faqDetails4Topic_'+topicID).empty().show();
 				if(!topicID)	{
-					$('#globalMessaging').append(app.u.formatMessage("Uh Oh. It seems an app error occured. Error: no topic id. see console for details."));
+					app.u.throwMessage("Uh Oh. It seems an app error occured. Error: no topic id. see console for details.");
 					app.u.dump("a required parameter (topicID) was left blank for myRIA.a.showFAQbyTopic");
 					}
 				else if(!app.data['appFAQs'] || $.isEmptyObject(app.data['appFAQs']['@detail']))	{
@@ -1553,19 +1565,15 @@ return r;
 				var pid = P.pid
 //				app.u.dump("BEGIN myRIA.u.showProd ["+pid+"]");
 				if(!app.u.isSet(pid))	{
-					$('#globalMessaging').append(app.u.formatMessage("Uh Oh. It seems an app error occured. Error: no product id. see console for details."));
-					app.u.dump("ERROR! showProd had no P.pid.  P:");
-					app.u.dump(P);
+					app.u.throwMessage("Uh Oh. It seems an app error occured. Error: no product id. see console for details.",true);
+					app.u.dump("ERROR! showProd had no P.pid.  P:"); app.u.dump(P);
 					}
 				else	{
 					P.templateID = 'productTemplate';
 					P.state = 'onInits'
 					app.ext.myRIA.u.handleTemplateFunctions(P);
 	//				app.ext.store_product.u.prodDataInModal({'pid':pid,'templateID':'productTemplate',});
-	//nuke existing content and error messages.
-					if(!app.u.isSet(P.skipClearMessaging))	{
-						$('#globalMessaging').empty();  //when app inits, don't clear messaing because it may include load errors
-						}
+
 					$('#mainContentArea').empty().append(app.renderFunctions.createTemplateInstance(P.templateID,"productViewer"));
 //					app.u.dump(" -> product template instance created.");
 
@@ -1767,11 +1775,11 @@ setTimeout(function(){
 
 /*
 will close any open modals. 
-by closing modals only, we can use dialogs to show information that we want to allow the
+by closing modals only (instead of all dialogs), we can use dialogs to show information that we want to allow the
 buyer to 'take with them' as they move between  pages.
 */
 			closeAllModals : function(){
-				app.u.dump("BEGIN myRIA.u.closeAllModals");
+//				app.u.dump("BEGIN myRIA.u.closeAllModals");
 				$(".ui-dialog-content").each(function(){
 					var $dialog = $(this);
 ///					app.u.dump(" -> $dialog.dialog('option','dialog'): "); app.u.dump($dialog.dialog('option','dialog'));
@@ -1788,6 +1796,8 @@ buyer to 'take with them' as they move between  pages.
 				$('#loginFormContainer, #recoverPasswordContainer').show(); //contains actual form and password recovery form (second id)
 				$('#loginFormForModal').dialog({modal: true,width:550,autoOpen:false});
 				$('#loginFormForModal').dialog('open');
+				
+		
 				}, //showLoginModal
 
 //executed from showCompany (used to be used for customer too)
@@ -1844,9 +1854,6 @@ buyer to 'take with them' as they move between  pages.
 
 //app.u.dump("BEGIN myRIA.u.showPage("+P.navcat+")");
 
-if(!app.u.isSet(P.skipClearMessaging))	{
-	$('#globalMessaging').empty();  //when app inits, don't clear messaing because it may include load errors
-	}
 $('#mainContentArea').empty();
 
 var catSafeID = P.navcat;
@@ -1950,7 +1957,8 @@ app.templates[P.templateID].find('[data-bind]').each(function()	{
 				//do nothing here, but make sure the 'else' for unrecognized namespace isn't reached.
 				}
 			else	{
-				$('#globalMessaging').append(app.u.formatMessage("Uh oh! unrecognized namespace ["+namespace+"] used on attribute "+attribute+" for pid "+P.pid));
+				app.u.throwMessage("Uh oh! unrecognized namespace ["+namespace+"] used on attribute "+attribute+" for pid "+P.pid);
+				app.u.dump("ERROR! unrecognized namespace ["+namespace+"] used on attribute "+attribute+" for pid "+P.pid);
 				}
 			}// /p.pid
 
@@ -1990,7 +1998,8 @@ app.templates[P.templateID].find('[data-bind]').each(function()	{
 				// do nothing. this would be hit for something like category(pretty), which is perfectly valid but needs no additional data.
 				}
 			else	{
-					$('#globalMessaging').append(app.u.formatMessage("Uh oh! unrecognized namespace ["+bindData['var']+"] used for pagetype "+P.pageType+" for navcat "+P.navcat));
+					app.u.throwMessage("Uh oh! unrecognized namespace ["+bindData['var']+"] used for pagetype "+P.pageType+" for navcat "+P.navcat);
+					app.u.dump("Uh oh! unrecognized namespace ["+bindData['var']+"] used for pagetype "+P.pageType+" for navcat "+P.navcat);
 				}
 
 			}
@@ -2064,6 +2073,7 @@ else	{
 					}
 				}, //removeByValue
 
+
 			showCart : function(pio)	{
 				if(typeof pio != 'object'){var pio = {}}
 //				app.u.dump("BEGIN myRIA.u.showCart");
@@ -2077,7 +2087,9 @@ else	{
 
 
 			
-
+/*
+commented out on 2012-09-17.
+I believe this was updated to the add2buyerlist function but not deleted when it happened?
 			handleAddToList : function(pid,listID)	{
 
 //app.u.dump("BEGIN myRIA.u.handleAddToList ("+pid+")");
@@ -2096,9 +2108,8 @@ else	{
 		}).appendTo($('#loginSuccessContainer'));
 	}
 
-
 				}, //handleAddToList
-				
+*/				
 //executed in checkout when 'next/submit' button is pushed for 'existing account' after adding an email/password. (preflight panel)
 //handles inline validation
 			loginFrmSubmit : function(email,password)	{
