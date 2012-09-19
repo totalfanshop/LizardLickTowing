@@ -538,6 +538,20 @@ app.u.handleCallback(tagObj);
 			},
 			
 
+//pass in a string (my.string.has.dots) and a nested data object, and the dots in the string will map to the object and return the value.
+//ex:  ('a.b',obj) where obj = {a:{b:'go pack go'}} -> this would return 'go pack go'
+//will be used in updates to translator.
+		getObjValFromDotString : function (dotStr,obj)	{
+			function multiIndex(obj,is) {  // obj,[1,2,3] -> obj[1][2][3]
+				return is.length ? multiIndex(obj[is[0]],is.slice(1)) : obj
+				}
+			function pathIndex(is,obj) {       // obj,'1.2.3' -> obj[1][2][3]
+				return multiIndex(obj,is.split('.'))
+				}
+			return pathIndex(dotStr,obj);
+			},
+
+
 //http://stackoverflow.com/questions/105034/how-to-create-a-guid-uuid-in-javascript
 		guidGenerator : function() {
 			var S4 = function() {
