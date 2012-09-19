@@ -1092,8 +1092,6 @@ P.listID (buyer list id)
 			handleAppInit : function(P)	{
 //				app.u.dump("BEGIN myRIA.u.handleAppInit");
 				if(typeof P != 'object')	{P = {}}
-
-// will return either the safe path or pid or something else useful
 				P = this.detectRelevantInfoToPage(window.location.href); 
 				P.back = 0; //skip adding a pushState on initial page load.
 //getParams wants string to start w/ ? but doesn't need/want all the domain url crap.
