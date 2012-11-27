@@ -1,0 +1,53 @@
+APPLICATION_BUILD_NOTES 
+Lizard Lick Towing
+
+
+Google Web Fonts: Cutive – use for all titles and main nav bar text
+		Arial – use for all body text
+
+
+Horiz nav bar -- Use horizontal scrolling and make it swipe nav friendly both vertically and horizontally. 
+
+
+Tap product thumbnail on homepageTemplate to reach categoryTemplate. 
+
+Rollovers for standard navigation buttons are located in the appView Nav bar folder.
+
+For text only rollover colors, please use #ec008c pink.
+
+Note about appView: 
+The jpg shows the persistant global elements but the nav bar moves vertically depending on if you’re on homepageTemplate or other pages, because the header area on the homepageTemplate is taller than other pages. 
+
+Because of this, the layered PSD has repeated header/footer and nav bar elements placed in the various template pages to show placement only.
+
+For any standard form pages please use a white background as seen in productTemplate. Use #000000 black arial for body text on white backgrounds. 
+
+
+Featured Products - homepageTemplate: Allow client control to switch this section at will.
+***I need to know what to send to the client to use as a background for his products? Backgrounds may have to be diff colors pending client.
+
+When user clicks a “buy now” button or “add to cart” the modalTemplate (shopping cart) should open with a zoom effect (zoom from 1% up to 100%). If zoom isn’t avail slide in from left side of screen.
+
+The modalTemplate screen should be resizable, and when user taps any other part of the screen the shopping cart should minimize.
+
+When the shopping cart when minimized, reverse scale from 100% down into a small tab on the bottom of screen (pending approval by client- modal may not be required to be persistent).
+
+Review page – client mentioned a Review page but didn’t provide any further info about it. Possibly something he’ll want to implement in “phase 2”. Please see Podio comments from Brian about Phase 2.
+
+
+For footer link -- ecommerce by Total Fan Shop -- link to Total Fan shop. Open a new browser window to www.totalfanshop.net
+
+Content in footer may change: pending client request.
+
+Questionaire refers to gift cards, coupons as a payment option. This isn’t reflected in the current footer and remains TBD. Pending client request.
+
+Client would like to allow automatic tracking of abandoned shopping carts.
+
+Trust insignia(s) – please place in footer – can provide in mockup if necessary. Recommend area below credit card icons.
+
+Social icons: FB and twitter. Allow facebook login.
+
+Contact Us page – see lizardlicktowing.com for content, include their phone number on this page only.
+
+Google Analytics Property ID: UA-503704-53
+Trust: BBB, Mcafee, Buysafe, etc.
