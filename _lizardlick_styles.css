@@ -1,0 +1,80 @@
+/************************************
+
+DEFAULT STYLES
+
+************************************/
+
+body {
+	background: black;
+	font-family: Arial, sans-serif;
+} 
+
+h1, h2, h3, h4, h5, h6 { 
+	font-family: 'Cutive', serif;
+	color: #ffcc00;
+}
+
+/************************************
+
+PERSISTENT CONTENT STYLES
+
+************************************/
+
+#appPreView, .contentHolder {
+	width: 957px;
+	margin: 0px auto;
+}
+
+#appView {
+	width: 100%;
+	background: url(img/lizardskin.png) center top no-repeat;
+}
+
+#header {
+	position: relative;
+}
+
+#header .logo {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#navbar {
+	border-top: 2px solid #c5bd00;
+	border-bottom: 2px solid #c5bd00;
+	height: 40px;
+	background: #29ba18; /* Old browsers */
+	background: -moz-linear-gradient(top,  #29ba18 0%, #117a05 50%, #29ba18 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#29ba18), color-stop(50%,#117a05), color-stop(100%,#29ba18)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #29ba18 0%,#117a05 50%,#29ba18 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #29ba18 0%,#117a05 50%,#29ba18 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #29ba18 0%,#117a05 50%,#29ba18 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #29ba18 0%,#117a05 50%,#29ba18 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29ba18', endColorstr='#29ba18',GradientType=0 ); /* IE6-9 */
+
+}
+
+#mainNav {
+	font-family: 'Cutive', serif;
+	
+	display: table;
+	width: 600px;
+}
+
+#mainNav a {
+	display: table-cell;
+	text-decoration: none;
+	line-height: 40px;
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	width: 25%;
+	text-align: center;
+}
+
+#globalNav {
+	margin-bottom: 20px;
+}
+
+#homepageBanner, #mainContent{ background: black;}
+

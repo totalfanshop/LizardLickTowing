@@ -25,7 +25,7 @@ var app = {vars:{
 	"release":"201210270525",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
 	"baseURL":"",
 	"httpsURL":"https://ssl.zoovy.com/s=www.sporks.zoovy.com/",
-	"httpURL":"http://www.homebrewers.com/"
+	"httpURL":"http://www.sporks.zoovy.com/"
 	},u:{},rq:[]};
 
 //set base url so images, css, js, etc all load from appropriate location once deployed.
@@ -41,7 +41,9 @@ if(document.location.protocol != 'file:')	{
 all css includes need to be after the js that changes the base url. 
 css files should be included before any .js file to ensure they are downloaded in parallel
 -->
+<link href='http://fonts.googleapis.com/css?family=Cutive' rel='stylesheet' type='text/css' />
 <link rel="stylesheet" type="text/css" href="qs_styles.css" />
+<link rel="stylesheet" type="text/css" href="_lizardlick_styles.css" />
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -51,27 +53,21 @@ css files should be included before any .js file to ensure they are downloaded i
 
 
 <script type="text/javascript">
-app.u.loadScript(app.vars.baseURL+"init.js");
+app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 </script>
 
 
 </head>
 
 <body>
-<!-- DELETE THIS WHEN YOU GET STARTED -->
-<h1>WELCOME TO QUICKSTART</h1>
-This file is intended to go along with the 10-step tutorial at: 
-<a href="https://github.com/zoovy/AnyCommerce-Development/wiki/quickstart">https://github.com/zoovy/AnyCommerce-Development/wiki/quickstart</a>
-<!-- /DELETE THIS WHEN YOU GET STARTED -->
-
-
 
 
 <!-- what is displayed onLoad until the view is loaded -->
-<div id='appPreView'>
+<div id='appPreView' class="alignCenter">
+<!--
 <table>
 <tr>
-	<td><!-- put logo here --></td>
+	<td></td>
 	<td>
 	<h3>One moment please.</h3>
 	
@@ -84,25 +80,51 @@ This file is intended to go along with the 10-step tutorial at:
 	</td>
 </tr>
 </table>
+-->
+
+<h1 >Get Licked! Wait For It...</h1>
+<div class="loadingBG"></div>
+<img src="img/logo.png" />
+
+
 </div>
 
 
 
 <div id='appView' class='displayNone'>
-
-<!-- VIEW CONTENT -->
-<!-- leave the appView div, put your your html here ...  -->
-
-	<!-- 
-	** REMINDER : DO NOT PUT ANY GRAPHICS/CONTENT THAT SHOULD NOT APPEAR ON EVERY PAGE IN THE VIEW (HERE)
-	**				  INSTEAD PUT THEM INTO <div id="homepageTemplate"></div>
+<div class="contentHolder">
+<div id="header">
+	<img class="logo pointer" onClick="return showContent('category',{'navcat':'.'})" src="img/logobig.png" />
+	<div id="globalNav" class="alignRight">
+		<a href="#">Contact</a> / 
+		<a href="#">FAQ</a> / 
+		<a href="#">Track My Order</a>
+		<a href="#">minicartstuff, yo</a>
+	</div>
+	<div id="homepageBanner" class="alignRight">
+		<img src="img/homepageBanner.png" />
+	</div>
+	<!--
+	<img id="nonHomepageBanner" src="img/nonHomepageBanner.png" />
 	-->
-<div id='globalMessaging' class='appMessaging'></div><!-- DO NOT REMOVE - used for some high level error handling (usually appears below breadcrumb nav or top bar) -->
-<div id='mainContentArea'></div><!-- DO NOT REMOVE - this is where the specific page (ex: homepage, product, category) content is going to go -->
+	
+	<div id="navbar">
+		<div id="mainNav">
+			<a href="#">apparel</a>
+			<a href="#">hats</a>
+			<a href="#">kids stuff</a>
+			<a href="#">other</a>
+		</div>
+		
+		<!--  TODO: search bar  -->
+	</div>
+</div>
+<div id="mainContent">
+	<div id='globalMessaging' class='appMessaging'></div><!-- DO NOT REMOVE - used for some high level error handling (usually appears below breadcrumb nav or top bar) -->
+	<div id='mainContentArea'></div><!-- DO NOT REMOVE - this is where the specific page (ex: homepage, product, category) content is going to go -->
+</div>
 
-
-<!-- ... your html ends -->
-<!-- /VIEW CONTENT -->
+</div>
 </div>
 
 
