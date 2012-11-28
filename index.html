@@ -96,10 +96,12 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 <div id="header">
 	<img class="logo pointer" onClick="return showContent('category',{'navcat':'.'})" src="img/logobig.png" />
 	<div id="globalNav" class="alignRight">
-		<a href="#">Contact</a> / 
-		<a href="#">FAQ</a> / 
-		<a href="#">Track My Order</a>
-		<a href="#">minicartstuff, yo</a>
+		<a href="#" onClick="return showContent('company',{'show':'contact'})">Contact</a> / 
+		<a href="#" onClick="return showContent('company',{'show':'faq'})">FAQ</a> / 
+		<a href="#" onClick="return showContent('customer',{'show':'orders'})">Track My Order</a>
+		<span class="pointer minicart" onClick="return showContent('cart',{})">
+			<img src="img/minicart.png" />Items in Cart: <span class="cartItemCount"></span>
+		</span>
 	</div>
 	<div id="homepageBanner" class="alignRight">
 		<img src="img/homepageBanner.png" />
