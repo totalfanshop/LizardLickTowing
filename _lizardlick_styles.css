@@ -89,8 +89,13 @@ PERSISTENT CONTENT STYLES
 	text-decoration: none;
 }
 
+#minicart {
+	margin-left: 20px;
+}
+
 #globalNav #minicart img {
-	padding-right: 5px;
+	padding-right: 10px;
+	margin-right: 8px;
 	border-right: 1px dotted #bab500;
 }
 

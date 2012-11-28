@@ -24,8 +24,8 @@ var myCreole;
 var app = {vars:{
 	"release":"201210270525",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
 	"baseURL":"",
-	"httpsURL":"https://ssl.zoovy.com/s=www.sporks.zoovy.com/",
-	"httpURL":"http://www.sporks.zoovy.com/"
+	"httpsURL":"https://ssl.zoovy.com/s=www.stage3motorsports.com/",
+	"httpURL":"http://www.stage3motorsports.com/"
 	},u:{},rq:[]};
 
 //set base url so images, css, js, etc all load from appropriate location once deployed.
@@ -99,8 +99,8 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 		<a href="#" onClick="return showContent('company',{'show':'contact'})">Contact</a> / 
 		<a href="#" onClick="return showContent('company',{'show':'faq'})">FAQ</a> / 
 		<a href="#" onClick="return showContent('customer',{'show':'orders'})">Track My Order</a>
-		<span class="pointer minicart" onClick="return showContent('cart',{})">
-			<img src="img/minicart.png" />Items in Cart: <span class="cartItemCount"></span>
+		<span id="minicart" class="pointer" onClick="return showContent('cart',{})">
+			<img src="img/minicart.png" />Items in Cart: <span class="cartItemCount">0</span>
 		</span>
 	</div>
 	<div id="homepageBanner" class="alignRight">
