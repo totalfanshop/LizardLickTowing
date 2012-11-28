@@ -15,8 +15,8 @@ app.rq.push(['extension',0,'store_cart','extensions/store_cart.js']);
 app.rq.push(['extension',0,'store_crm','extensions/store_crm.js']);
 app.rq.push(['extension',0,'myRIA','quickstart.js','startMyProgram']);
 
-app.rq.push(['extension',1,'analytics_google','extensions/analytics_google.js','addTriggers']);
-//app.rq.push(['extension',1,'bonding_buysafe','extensions/bonding_buysafe.js','addTriggers']);
+app.rq.push(['extension',1,'analytics_google','extensions/analytics_google.js','startExtension']);
+//app.rq.push(['extension',1,'bonding_buysafe','extensions/bonding_buysafe.js','startExtension']);
 //app.rq.push(['extension',1,'powerReviews','extensions/reviews_powerreviews.js','startExtension']);
 //app.rq.push(['extension',0,'magicToolBox','extensions/imaging_magictoolbox.js','startExtension']); // (not working yet - ticket in to MTB)
 
@@ -26,17 +26,7 @@ app.rq.push(['extension',1,'analytics_google','extensions/analytics_google.js','
 app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 	$( ".tabbedProductContent",$('#productTemplate_'+app.u.makeSafeHTMLId(P.pid))).tabs();
 	}]);
-/*
-app.rq.push(['templateFunction','homepageTemplate','onCompletes',function(P) {
-	$("#nonHomepageBanner").addClass("displayNone");
-	$("#homepageBanner").removeClass("displayNone");
-	}]);
-	
-app.rq.push(['templateFunction','homepageTemplate','onDeparts',function(P) {
-	$("#nonHomepageBanner").removeClass("displayNone");
-	$("#homepageBanner").addClass("displayNone");
-	}]);
-*/	
+
 app.rq.push(['script',0,(document.location.protocol == 'file:') ? app.vars.httpURL+'jquery/config.js' : app.vars.baseURL+'jquery/config.js']); //The config.js is dynamically generated.
 app.rq.push(['script',0,app.vars.baseURL+'model.js']); //'validator':function(){return (typeof zoovyModel == 'function') ? true : false;}}
 app.rq.push(['script',0,app.vars.baseURL+'includes.js']); //','validator':function(){return (typeof handlePogs == 'function') ? true : false;}})

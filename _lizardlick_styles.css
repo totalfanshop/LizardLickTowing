@@ -114,3 +114,10 @@ PERSISTENT CONTENT STYLES
 
 }
 
+.ui-accordion .ui-accordion-content {
+	display: none;
+}
+
+.ui-accordion .ui-accordion-header .ui-icon {
+    display: inline-block;
+}
