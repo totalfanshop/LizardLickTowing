@@ -14,6 +14,19 @@ h1, h2, h3, h4, h5, h6 {
 	color: #ffcc00;
 }
 
+.roundContainer {
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.darkBorder {
+	border: 1px solid #15670c;
+}
+
+.positionRelative {
+	position: relative;
+}
+
 /************************************
 
 LAYOUT
@@ -67,6 +80,7 @@ HEADER STYLES
 	
 	display: table;
 	width: 600px;
+	float: left;
 }
 
 #mainNav a {
@@ -77,6 +91,46 @@ HEADER STYLES
 	text-shadow: 1px 1px 1px black;
 	width: 25%;
 	text-align: center;
+}
+
+#headerSearch {
+	width: 300px;
+	text-align: right;
+	float: right;
+	padding-top: 6px;
+}
+
+#headerSearch .productSearchKeyword {
+	color: white;
+	border: none;
+	
+	text-indent: 10px;
+	
+	width: 260px;
+	height: 26px;
+
+	background: #21a513; /* Old browsers */
+	background: -moz-linear-gradient(top,  #21a513 0%, #12460b 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#21a513), color-stop(100%,#12460b)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #21a513 0%,#12460b 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #21a513 0%,#12460b 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #21a513 0%,#12460b 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #21a513 0%,#12460b 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#21a513', endColorstr='#12460b',GradientType=0 ); /* IE6-9 */
+}
+
+#headerSearch .search {
+	background: url(img/searchicon.png) center center no-repeat;
+	background-size: contain;
+	-o-background-size: contain;
+	-moz-background-size: contain;
+	-webkit-background-size: contain;
+	border: none;
+	height: 26px;
+	width: 26px;
+	position: absolute;
+	right: 4px;
+	top: 4px;
 }
 
 #globalNav {

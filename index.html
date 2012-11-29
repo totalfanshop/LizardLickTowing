@@ -46,10 +46,11 @@ css files should be included before any .js file to ensure they are downloaded i
 <link rel="stylesheet" type="text/css" href="_lizardlick_styles.css" />
 <!--
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/redmond/jquery-ui.css" />
+<script src="jqueryui/js/jquery-1.8.3.js"></script>
 -->
 <link rel="stylesheet" type="text/css" href="jqueryui/lizardLick_theme/jquery-ui-1.9.2.custom.css" />
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
 <script type="text/javascript" src="loadscript.js"></script>
 
 
@@ -121,7 +122,13 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 			<a href="#">other</a>
 		</div>
 		
-		<!--  TODO: search bar  -->
+		<form id="headerSearch" name='headerSearchFrm' action='#' class='productSearchForm' method="get">
+			<div class="roundContainer darkBorder floatLeft positionRelative">
+				<input type='search' name='KEYWORDS' value="what y'all lookin' for?" class="productSearchKeyword handleDefault" />
+				<input class="search pointer" type="submit" value="" />
+			</div>
+			
+		</form>
 	</div>
 </div>
 <div id="mainContent">
