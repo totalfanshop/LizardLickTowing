@@ -136,6 +136,7 @@ else	{
 
 //The request for appCategoryList is needed early for both the homepage list of cats and tier1.
 //piggyback a few other necessary requests here to reduce # of requests
+				//app.ext.store_navcats.calls.appCategoryList.init("", {"callback":"showRootCategories","extension":"myRIA"},'mutable');
 				app.ext.store_navcats.calls.appCategoryList.init({"callback":"showRootCategories","extension":"myRIA"},'mutable');
 				app.calls.appProfileInfo.init(app.vars.profile,{},'mutable');
 				app.model.dispatchThis(); //this dispatch needs to occur prior to handleAppInit being executed.

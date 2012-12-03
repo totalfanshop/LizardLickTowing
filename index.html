@@ -97,6 +97,9 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 
 <div id='appView' class='displayNone'>
 <div class="contentHolder">
+<!--
+<ul id="tier1categories"></ul>
+-->
 <div id="header">
 	<img class="logo pointer" onClick="return showContent('category',{'navcat':'.'})" src="img/logobig.png" />
 	<div id="globalNav" class="alignRight">
@@ -136,7 +139,25 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 	<div id='mainContentArea'></div><!-- DO NOT REMOVE - this is where the specific page (ex: homepage, product, category) content is going to go -->
 
 	<div id="footerBanner">
+		<div id="weShipEverywhere">
+			<img src="img/footerglobe.png" /> We Ship Everywhere!
+		</div>
 		
+		<div id="footerNewsletterForm">
+			<form action="#" id="subscribeFrmFooter" name="subscribeFrm" class="newsletterSubscriptionForm" method="get">
+				<input name="newsletter-1" value="1" type="hidden">
+				<div class="roundContainer goldBorder insetShadow">
+					<input required="required" value="Email Address" class="newsSubscribeInput textbox email handleDefault" maxlength="50" size="25" name="login" id="subscribeLoginFooter" type="email">
+				</div>
+				<div class="roundContainer goldBorder insetShadow">
+					<input required="required" value="Full Name" class="newsSubscribeInput textbox fullname handleDefault" maxlength="50" size="25" name="fullname" id="subscribeFullnameFooter" type="text">
+				</div>
+				<input class="submit" value="Sign Up" type="submit">
+			</form>
+		</div>
+		
+		<div id="footerSocialLinks">
+		</div>
 	</div>
 </div>
 
