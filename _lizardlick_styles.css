@@ -1,6 +1,6 @@
 /************************************
 
-DEFAULT STYLES
+DEFAULT AND UTILITY STYLES
 
 ************************************/
 
@@ -31,6 +31,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .positionRelative {
 	position: relative;
+}
+
+.underlineGold {
+	border-bottom: 1px solid #ffcc00;
 }
 
 /************************************
@@ -177,6 +181,10 @@ BODY STYLES
 
 }
 
+#mainContentPadding {
+	padding: 10px 20px;
+}
+
 /************************************
 
 FOOTER STYLES
@@ -195,6 +203,7 @@ FOOTER STYLES
 	display: table-cell;
 	border-right: 1px dashed #beb800; 
 	padding-right: 30px;
+	vertical-align: middle;
 }
 
 #footerBanner > div:last-of-type {
@@ -218,12 +227,12 @@ div#footerNewsletterForm {
 #footerNewsletterForm input {
 	position: relative;
 	
-	width: 100px;
+	width: 150px;
 	height: 24px;
 	
 	color: #beb800;
 	
-	top: -2px;
+	
 	border: none;
 	background: #10410a; /* Old browsers */
 	background: -moz-linear-gradient(top,  #10410a 30%, #0b2607 100%); /* FF3.6+ */
@@ -236,6 +245,18 @@ div#footerNewsletterForm {
 
 }
 
+#footerNewsletterForm input[type="submit"] {
+	width: 100px;
+	background: #138106; /* Old browsers */
+	background: -moz-linear-gradient(top,  #138106 30%, #12420a 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#138106), color-stop(100%,#12420a)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #138106 30%,#12420a 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #138106 30%,#12420a 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #138106 30%,#12420a 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #138106 30%,#12420a 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#138106', endColorstr='#12420a',GradientType=0 ); /* IE6-9 */
+
+}
 #footerSocialLinks{ width: 15%; }
 
 #footerLinks {

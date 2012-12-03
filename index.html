@@ -135,9 +135,10 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 	</div>
 </div>
 <div id="mainContent">
-	<div id='globalMessaging' class='appMessaging'></div><!-- DO NOT REMOVE - used for some high level error handling (usually appears below breadcrumb nav or top bar) -->
-	<div id='mainContentArea'></div><!-- DO NOT REMOVE - this is where the specific page (ex: homepage, product, category) content is going to go -->
-
+	<div id="mainContentPadding">
+		<div id='globalMessaging' class='appMessaging'></div><!-- DO NOT REMOVE - used for some high level error handling (usually appears below breadcrumb nav or top bar) -->
+		<div id='mainContentArea'></div><!-- DO NOT REMOVE - this is where the specific page (ex: homepage, product, category) content is going to go -->
+	</div>
 	<div id="footerBanner">
 		<div id="weShipEverywhere">
 			<img src="img/footerglobe.png" /> We Ship Everywhere!
@@ -152,7 +153,9 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 				<div class="roundContainer goldBorder insetShadow">
 					<input required="required" value="Full Name" class="newsSubscribeInput textbox fullname handleDefault" maxlength="50" size="25" name="fullname" id="subscribeFullnameFooter" type="text">
 				</div>
-				<input class="submit" value="Sign Up" type="submit">
+				<div class="roundContainer goldBorder insetShadow">
+					<input class="submit" value="Sign Up" type="submit">
+				</div>
 			</form>
 		</div>
 		
@@ -164,16 +167,16 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 
 <div id="footerLinks">
 	<div>
-		<a href="#">Home</a> /
-		<a href="#">Contact</a> /
-		<a href="#">FAQ</a> /
-		<a href="#">Privacy</a> /
-		<a href="#">Shipping</a> /
-		<a href="#">Payment</a> /
-		<a href="#">Returns</a> /
-		<a href="#">My Account</a> /
-		<a href="#">Shopping Cart</a> /
-		<a href="#">Checkout</a>
+		<a href="#" onClick="return showContent('category',{'navcat':'.'})">Home</a> /
+		<a href="#" onClick="return showContent('company',{'show':'contact'})">Contact</a> /
+		<a href="#" onClick="return showContent('company',{'show':'faq'})">FAQ</a> /
+		<a href="#" onClick="return showContent('company',{'show':'privacy'})">Privacy</a> /
+		<a href="#" onClick="return showContent('company',{'show':'shipping'})">Shipping</a> /
+		<a href="#" onClick="return showContent('company',{'show':'payment'})">Payment</a> /
+		<a href="#" onClick="return showContent('company',{'show':'returns'})">Returns</a> /
+		<a href="#" onClick="return showContent('customer',{'show':'myaccount'})">My Account</a> /
+		<a href="#" onClick="return showContent('cart',{})">Shopping Cart</a> /
+		<a href="#" onClick="return showContent('cart',{})">Checkout</a>
 	</div>
 	
 	<div>
@@ -230,13 +233,14 @@ the homepageTemplate template is loaded into mainContentArea by default when the
 <div id='homepageTemplate'>
 
 
-	<ul data-bind="var: category(@subcategoryDetail); format: categoryList; extension: store_navcats; loadsTemplate: categoryListTemplate; detail:max;" class='listStyleNone fluidList clearfix noPadOrMargin categoryList'></ul>
+	<ul data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListTemplate; hide_summary:1; before:<h2 class='underlineGold'>Featured Products</h2>; withReviews:1; items_per_page: 3;" class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
 	
-	<ul data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListTemplate; hide_summary:1; before:<h2>Featured Items</h2>; withReviews:1;" class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
+	<ul data-bind="var: category(@subcategoryDetail); format: categoryList; extension: store_navcats; loadsTemplate: categoryListTemplate; detail:max; before:<h2 class='underlineGold'>Shop</h2>;" class='listStyleNone fluidList clearfix noPadOrMargin categoryList'></ul>
+	
+	<!--
 	<p data-bind="var: category(%page.description); format:wiki; wikiFormats:myRIA; editor: textarea;"></p>
-
 	<ul id='homeProdSearchBestSellers' data-bind='var: elastic-native({"size":"4","mode":"elastic-native","filter":{"term":{"tags":"IS_BESTSELLER"}}}); format: productSearch; extension: myRIA; loadsTemplate: productListTemplateResults; before:<h2>Best Sellers</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
-
+	-->
 </div>
 
 
