@@ -94,16 +94,12 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 <h1 >Get Licked! Wait For It...</h1>
 <div class="loadingBG" id="appLoadPercentage">0%</div>
 <script type="text/javascript">
-var loadInterval;	
-
-$(function(){
-	loadInterval = setInterval(pulse, 1000);
-});
-
 pulse = function() {
 	$("#appLoadPercentage").animate({'font-size':'2em'}, 500).animate({'font-size':'1.5em'}, 500);
-	app.u.dump("pulsing");
 }
+var loadInterval = setInterval(pulse, 1000);
+
+
 </script>
 <img src="img/logo.png" />
 
