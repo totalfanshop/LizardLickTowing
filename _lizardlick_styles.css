@@ -51,7 +51,8 @@ LAYOUT
 
 #appView {
 	width: 100%;
-	background: url(img/lizardskin.png) center top no-repeat;
+	/* background: url(img/lizardSkin_single.gif) center top repeat; */
+	background: url(img/lizard_texture.png) center top repeat-y;
 }
 
 /************************************
