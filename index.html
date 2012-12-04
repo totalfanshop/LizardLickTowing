@@ -34,6 +34,8 @@ if(document.location.protocol != 'file:')	{
 	app.vars.baseURL  = "https:" == document.location.protocol ? app.vars.httpsURL : app.vars.httpURL; 
 	document.getElementsByTagName('base')[0].href = app.vars.baseURL;
 	}
+
+
 </script>
 
 
@@ -58,6 +60,9 @@ css files should be included before any .js file to ensure they are downloaded i
 
 <script type="text/javascript">
 app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
+
+
+
 </script>
 
 
@@ -87,7 +92,19 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 -->
 
 <h1 >Get Licked! Wait For It...</h1>
-<div class="loadingBG"></div>
+<div class="loadingBG" id="appLoadPercentage">0%</div>
+<script type="text/javascript">
+var loadInterval;	
+
+$(function(){
+	loadInterval = setInterval(pulse, 1000);
+});
+
+pulse = function() {
+	$("#appLoadPercentage").animate({'font-size':'2em'}, 500).animate({'font-size':'1.5em'}, 500);
+	app.u.dump("pulsing");
+}
+</script>
 <img src="img/logo.png" />
 
 

@@ -57,6 +57,22 @@ LAYOUT
 
 /************************************
 
+LOADER STYLES
+
+************************************/
+
+#appLoadPercentage {
+	font-size: 1.5em;
+	font-family: 'Cutive', serif;
+	color: #ffcc00;
+	/* width : 50px; */
+	/* height: 50px; */
+	text-align: center;
+	line-height: 100px;
+}
+
+/************************************
+
 HEADER STYLES
 
 ************************************/

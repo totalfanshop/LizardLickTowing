@@ -79,6 +79,7 @@ app.u.initMVC = function(attempts){
 
 	$('#appPreViewProgressBar').val(percentComplete);
 	$('#appPreViewProgressText').empty().append(percentComplete+"% Complete");
+	$('#appLoadPercentage').empty().append(percentComplete+"%");
 
 	if(resourcesLoaded == app.vars.rq.length)	{
 //instantiate controller. handles all logic and communication between model and view.
