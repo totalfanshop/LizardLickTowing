@@ -204,6 +204,38 @@ BODY STYLES
 
 /************************************
 
+HOMEPAGE STYLES
+
+************************************/
+.featuredProducts {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.featuredProducts li {
+	width: 296px;
+	height: 450px;
+	margin: 0px 4px;
+	padding: 0px;
+}
+
+.featuredProducts .prodThumbContainer {
+	border: 1px solid #ffcc00;
+	width: 294px;
+	height: 284px;
+}
+
+.featuredProducts li img {
+	border: 2px solid white;
+}
+
+.featuredProducts h1, .featuredProducts h2, .featuredProducts h3, .featuredProducts h4, .featuredProducts h5, .featuredProducts h6 {
+	color: white;
+}
+
+
+/************************************
+
 FOOTER STYLES
 
 ************************************/
