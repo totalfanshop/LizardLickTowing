@@ -20,10 +20,11 @@ var _gaq = _gaq || {'push':function(){}} //here for testing. REPLACE BEFORE DEPL
 var myCreole;
 
 var app = {vars:{
-	"release":"20121116003200",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
+	"release":"20121203113200",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
+	"_clientid":"zmvc",
 	"baseURL":"",
 	"httpsURL":"https://ssl.zoovy.com/s=www.sporks.zoovy.com/",
-	"httpURL":"http://www.sporks.zoovy.com/"
+	"httpURL":"http://www.lizardlicktowingstore.com/"
 	},u:{},rq:[]};
 
 //set base url so images, css, js, etc all load from appropriate location once deployed.
@@ -978,7 +979,7 @@ So the cart template should contain these two elements and the extension should 
 
 <section id='cartTemplateShippingContainer'>
 	<h3>Shipping:</h3>
-	<ul class='noPadOrMargin listStyleNone cartShipMethods' data-bind='var: cart(@shipmethods); format:shipMethodsAsRadioButtons; extension:store_cart;'></ul>
+	<ul class='noPadOrMargin listStyleNone cartShipMethods' data-bind='var: cart(@SHIPMETHODS); format:shipMethodsAsRadioButtons; extension:store_cart;'></ul>
 </section>
 		
 <section class='stdMargin'>
@@ -1052,7 +1053,7 @@ So the cart template should contain these two elements and the extension should 
 
 		</div>
 		
-		<div class='ztable_row_small prodOptions' data-bind='var: variations(*options); format:selectedOptionsDisplay;'></div>
+		<div class='ztable_row_small prodOptions' data-bind='var: variations(%options); format:selectedOptionsDisplay;'></div>
 	</li>
 </ul>
 
@@ -1387,7 +1388,7 @@ The 'data-action' attribute is used to assign an onclick.
 <div class='debug displayNone'>
 
 <menu>
-	<li><a href='#' onClick="return showContent('category',{'navcat':'.'});">Homepage</a></li>
+	<li><a href='#' onClick="return showContent('homepage',{});">Homepage</a></li>
 	<li><a href='#' onClick="return showContent('customer',{'show':'orders'});">Orders</a></li>
 	<li><a href='#' onClick="return showContent('cart',{'show':'cart'});">Cart</a></li>
 	<li><a href='#' onClick="app.ext.store_cart.u.showCartInModal({'templateID':'cartTemplate'});">CartInModal</a></li>

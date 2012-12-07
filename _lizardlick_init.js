@@ -39,7 +39,6 @@ app.rq.push(['templateFunction','homepageTemplate','onDeparts',function(P) {app.
 
 //group any third party files together (regardless of pass) to make troubleshooting easier.
 app.rq.push(['script',0,(document.location.protocol == 'https:' ? 'https:' : 'http:')+'//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.js']);
-//app.rq.push(['script',0,'jqueryui/js/jquery-ui-1.9.2.custom.js']);
 
 
 /*
@@ -79,7 +78,6 @@ app.u.initMVC = function(attempts){
 
 	$('#appPreViewProgressBar').val(percentComplete);
 	$('#appPreViewProgressText').empty().append(percentComplete+"% Complete");
-	$('#appLoadPercentage').empty().append(percentComplete+"%");
 
 	if(resourcesLoaded == app.vars.rq.length)	{
 //instantiate controller. handles all logic and communication between model and view.
@@ -108,8 +106,6 @@ app.u.initMVC = function(attempts){
 //will pass in the page info object. (pageType, templateID, pid/navcat/show and more)
 app.u.appInitComplete = function(P)	{
 	app.u.dump("Executing myAppIsLoaded code...");
-	
-	window.clearInterval(loadInterval);
 	}
 
 

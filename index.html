@@ -114,7 +114,7 @@ var loadInterval = setInterval(pulse, 1000);
 <ul id="tier1categories"></ul>
 -->
 <div id="header">
-	<img class="logo pointer" onClick="return showContent('category',{'navcat':'.'})" src="img/logobig.png" />
+	<img class="logo pointer" onClick="return showContent('homepage',{})" src="img/logobig.png" />
 	<div id="globalNav" class="alignRight">
 		<a href="#" onClick="return showContent('company',{'show':'contact'})">Contact</a> / 
 		<a href="#" onClick="return showContent('company',{'show':'faq'})">FAQ</a> / 
@@ -180,7 +180,7 @@ var loadInterval = setInterval(pulse, 1000);
 
 <div id="footerLinks">
 	<div>
-		<a href="#" onClick="return showContent('category',{'navcat':'.'})">Home</a> /
+		<a href="#" onClick="return showContent('homepage',{})">Home</a> /
 		<a href="#" onClick="return showContent('company',{'show':'contact'})">Contact</a> /
 		<a href="#" onClick="return showContent('company',{'show':'faq'})">FAQ</a> /
 		<a href="#" onClick="return showContent('company',{'show':'privacy'})">Privacy</a> /
@@ -890,7 +890,7 @@ adding classes is not likely to have any bad effects.
 		<div id='myaccountArticle' class='displayNone textContentArea'>
 			<h1>My Account</h1>
 			<div id='logMessaging'></div>
-			<div><a href="#" onClick="app.u.logBuyerOut(); showContent('category',{'navcat':'.'}); return false;">Log Out</a></div>
+			<div><a href="#" onClick="app.u.logBuyerOut(); showContent('homepage',{}); return false;">Log Out</a></div>
 			
 			<section id='buyerAddresses' class='clearfix'>
 
@@ -1508,7 +1508,7 @@ The 'data-action' attribute is used to assign an onclick.
 <div class='debug displayNone'>
 
 <menu>
-	<li><a href='#' onClick="return showContent('category',{'navcat':'.'});">Homepage</a></li>
+	<li><a href='#' onClick="return showContent('homepage',{});">Homepage</a></li>
 	<li><a href='#' onClick="return showContent('customer',{'show':'orders'});">Orders</a></li>
 	<li><a href='#' onClick="return showContent('cart',{'show':'cart'});">Cart</a></li>
 	<li><a href='#' onClick="app.ext.store_cart.u.showCartInModal({'templateID':'cartTemplate'});">CartInModal</a></li>

@@ -32,7 +32,6 @@ var myRIA = function() {
 			'categoryListTemplate',
 			'categoryListTemplateRootCats',
 			'productListTemplate',
-			'productListTemplateNoQuickview',
 			'productListTemplateATC',
 			'productListTemplateBuyerList',
 			'productListTemplateResults',
@@ -137,8 +136,7 @@ else	{
 
 //The request for appCategoryList is needed early for both the homepage list of cats and tier1.
 //piggyback a few other necessary requests here to reduce # of requests
-				//app.ext.store_navcats.calls.appCategoryList.init("", {"callback":"showRootCategories","extension":"myRIA"},'mutable');
-				app.ext.store_navcats.calls.appCategoryList.init({"callback":"showRootCategories","extension":"myRIA"},'mutable');
+				app.ext.store_navcats.calls.appCategoryList.init(zGlobals.appSettings.rootcat,{"callback":"showRootCategories","extension":"myRIA"},'mutable');
 				app.calls.appProfileInfo.init(app.vars.profile,{},'mutable');
 				app.model.dispatchThis(); //this dispatch needs to occur prior to handleAppInit being executed.
 
@@ -201,7 +199,7 @@ else	{
 //we always get the tier 1 cats so they're handy, but we only do something with them out of the get if necessary (tier1categories is defined)
 				if($('#tier1categories').length)	{
 					app.u.dump("#tier1categories is set. fetch tier1 cat data.");
-					app.ext.store_navcats.u.getChildDataOf('.',{'parentID':'tier1categories','callback':'addCatToDom','templateID':'categoryListTemplateRootCats','extension':'store_navcats'},'appCategoryDetailMax');  //generate nav for 'browse'. doing a 'max' because the page will use that anway.
+					app.ext.store_navcats.u.getChildDataOf(zGlobals.appSettings.rootcat,{'parentID':'tier1categories','callback':'addCatToDom','templateID':'categoryListTemplateRootCats','extension':'store_navcats'},'appCategoryDetailMax');  //generate nav for 'browse'. doing a 'max' because the page will use that anway.
 					app.model.dispatchThis();
 					}
 				}
@@ -829,7 +827,7 @@ for legacy browsers. That means old browsers will use the anchor to retain 'back
 	
 					case 'homepage':
 						infoObj.pageType = 'homepage';
-						infoObj.navcat = '.'
+						infoObj.navcat = zGlobals.appSettings.rootcat;
 						infoObj.parentID = app.ext.myRIA.u.showPage(infoObj);
 						break;
 
@@ -1189,7 +1187,6 @@ P.listID (buyer list id)
 				app.ext.myRIA.vars.sotw = P;
 				app.ext.myRIA.vars.hotw.unshift(P);
 				app.ext.myRIA.vars.hotw.pop(); //remove last entry in array. is created with array(15) so this will limit the size.
-				
 				},
 			
 			showtransition : function(P,$old)	{
@@ -1322,7 +1319,7 @@ P.listID (buyer list id)
 //quickstart is here so a user doesn't see a page not found error by default.
 				else if(url.indexOf('index.html') > -1)	{
 					r.pageType = 'homepage'
-					r.navcat = '.'; //left with category.safe.id or category.safe.id/
+					r.navcat = zGlobals.appSettings.rootcat; //left with category.safe.id or category.safe.id/
 					}
 				else if(url.indexOf('quickstart.html') > -1)	{
 					var msg = app.u.errMsgObject('Rename this file as index.html to decrease the likelyhood of accidentally saving over it.',"MVC-INIT-MYRIA_1000")
@@ -1333,7 +1330,7 @@ P.listID (buyer list id)
 //the url in the domain may or may not have a slash at the end. Check for both
 				else if(url == zGlobals.appSettings.http_app_url || url+"/" == zGlobals.appSettings.http_app_url || url == zGlobals.appSettings.https_app_url || url+"/" == zGlobals.appSettings.https_app_url)	{
 					r.pageType = 'homepage'
-					r.navcat = '.'; //left with category.safe.id or category.safe.id/
+					r.navcat = zGlobals.appSettings.rootcat; //left with category.safe.id or category.safe.id/
 					}
 				else	{
 //					alert('Got to else case.');
@@ -1485,8 +1482,8 @@ P.listID (buyer list id)
 //				app.u.dump(P);
 				var r = false; //what is returned
 				if(P.pid)	{r = 'product'}
-				else if(P.catSafeID == '.'){r = 'homepage'}
-				else if(P.navcat == '.'){r = 'homepage'}
+				else if(P.catSafeID == zGlobals.appSettings.rootcat){r = 'homepage'}
+				else if(P.navcat == zGlobals.appSettings.rootcat){r = 'homepage'}
 				else if(P.catSafeID){r = 'category'}
 				else if(P.keywords || P.KEYWORDS){r = 'search'}
 				else if(P.navcat){r = 'category'}
@@ -1941,12 +1938,8 @@ return r;
 //					app.u.dump($this.attr('href'));
 					var P = app.ext.myRIA.u.parseAnchor($this.attr('href'));
 					if(P.pageType == 'category' && P.navcat && P.navcat != '.'){
-//for bindnavs, get info to have handy. the timeout is so that the app has time to load/init and this has no impact.
-//also to reduce # of mutliple requests (init may get this cat already because it's in focus, for instance).
-setTimeout(function(){
-	app.ext.store_navcats.calls.appCategoryDetailMax.init(P.navcat,{},'passive');
-	},7000); //throw this into the q to have handy. do it later 
-						
+//for bindnavs, get info to have handy. add to passive Q and It'll get dispatched by a setInterval.
+app.ext.store_navcats.calls.appCategoryDetailMax.init(P.navcat,{},'passive');
 						}
 					$this.click(function(event){
 //						event.preventDefault(); //cancels any action on the href. keeps anchor from jumping.
@@ -2064,7 +2057,8 @@ buyer to 'take with them' as they move between  pages.
 					if(P.templateID){
 						//templateID 'forced'. use it.
 						}
-					else if(catSafeID == '.' || P.pageType == 'homepage')	{
+						
+					else if(catSafeID == zGlobals.appSettings.rootcat || P.pageType == 'homepage')	{
 						P.templateID = 'homepageTemplate'
 						}
 					else	{
@@ -2354,20 +2348,26 @@ else	{
 				
 //app.ext.myRIA.u.handleMinicartUpdate();			
 			handleMinicartUpdate : function(tagObj)	{
-//				app.u.dump("BEGIN myRIA.u.handleMinicartUPdate");
+//				app.u.dump("BEGIN myRIA.u.handleMinicartUPdate"); app.u.dump(tagObj);
 				var r = false; //what's returned. t for cart updated, f for no update.
-				if(app.data[tagObj.datapointer] && app.data[tagObj.datapointer].cart)	{
-					var $appView = $('#appView');
+				var $appView = $('#appView');
+				var itemCount = 0;
+				var subtotal = 0;
+				var total = 0;
+				if(app.data[tagObj.datapointer] && app.data[tagObj.datapointer].sum)	{
 					r = true;
-					var itemCount = app.u.isSet(app.data[tagObj.datapointer].cart['data.item_count']) ? app.data[tagObj.datapointer].cart['data.item_count'] : app.data[tagObj.datapointer].cart['data.add_item_count']
-	//				app.u.dump(" -> itemCount: "+itemCount);
-	//used for updating minicarts.
-					$('.cartItemCount',$appView).text(itemCount);
-					var subtotal = app.u.isSet(app.data[tagObj.datapointer].cart['sum/items_total']) ? app.data[tagObj.datapointer].cart['sum/items_total'] : 0;
-					var total = app.u.isSet(app.data[tagObj.datapointer].cart['sum/order_total']) ? app.data[tagObj.datapointer].cart['sum/order_total'] : 0;
-					$('.cartSubtotal',$appView).text(app.u.formatMoney(subtotal,'$',2,false));
-					$('.cartTotal',$appView).text(app.u.formatMoney(total,'$',2,false));
+					var itemCount = app.u.isSet(app.data[tagObj.datapointer].sum.items_count) || 0;
+					var subtotal = app.data[tagObj.datapointer].sum.items_total;
+					var total = app.data[tagObj.datapointer].sum.order_total;
 					}
+				else	{
+					//cart not in memory yet. use defaults.
+					}
+
+				$('.cartItemCount',$appView).text(itemCount);
+				$('.cartSubtotal',$appView).text(app.u.formatMoney(subtotal,'$',2,false));
+				$('.cartTotal',$appView).text(app.u.formatMoney(total,'$',2,false));
+
 				//no error for cart data not being present. It's a passive function.
 				return r;
 				},
