@@ -1441,6 +1441,9 @@ P.listID (buyer list id)
 				case 'product':
 					relativePath = 'product/'+P.pid+'/';
 					break;
+				case 'homepage':
+					relativePath = '';
+					break;
 				case 'category':
 
 //don't want /category/.something, wants /category/something
