@@ -98,7 +98,7 @@ app.u.initMVC = function(attempts){
 	else	{
 		setTimeout("app.u.initMVC("+(attempts+1)+")",250);
 		}
-	window.clearInterval(loadInterval);
+	
 	}
 
 
@@ -107,6 +107,7 @@ app.u.initMVC = function(attempts){
 //will pass in the page info object. (pageType, templateID, pid/navcat/show and more)
 app.u.appInitComplete = function(P)	{
 	app.u.dump("Executing myAppIsLoaded code...");
+	window.clearInterval(loadInterval);
 	}
 
 
