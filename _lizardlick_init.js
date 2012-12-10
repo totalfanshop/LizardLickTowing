@@ -78,7 +78,8 @@ app.u.initMVC = function(attempts){
 
 	$('#appPreViewProgressBar').val(percentComplete);
 	$('#appPreViewProgressText').empty().append(percentComplete+"% Complete");
-
+	$('#appLoadPercentage').empty().append(percentComplete+"%");
+	
 	if(resourcesLoaded == app.vars.rq.length)	{
 //instantiate controller. handles all logic and communication between model and view.
 //passing in app will extend app so all previously declared functions will exist in addition to all the built in functions.
@@ -97,7 +98,7 @@ app.u.initMVC = function(attempts){
 	else	{
 		setTimeout("app.u.initMVC("+(attempts+1)+")",250);
 		}
-
+	window.clearInterval(loadInterval);
 	}
 
 
