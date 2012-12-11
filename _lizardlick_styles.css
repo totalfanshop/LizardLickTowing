@@ -226,13 +226,13 @@ HOMEPAGE STYLES
 }
 
 .featuredProducts .prodThumbContainer {
-	border: 1px solid #ffcc00;
+	border: 2px solid #ffcc00;
 	width: 294px;
 	height: 284px;
 }
 
 .featuredProducts li img {
-	border: 2px solid white;
+	border: 4px solid white;
 }
 
 .featuredProducts h1, .featuredProducts h2, .featuredProducts h3, .featuredProducts h4, .featuredProducts h5, .featuredProducts h6 {
