@@ -22,7 +22,7 @@ var _gaq = _gaq || {'push':function(){}} //here for testing. REPLACE BEFORE DEPL
 var myCreole;
 
 var app = {vars:{
-	"release":"201212100091400",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
+	"release":"20121211103200",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
 	"baseURL":"",
 	"httpsURL":"https://ssl.zoovy.com/s=www.stage3motorsports.com/",
 	"httpURL":"http://www.87aba6c.hoth.zoovy.net/"
@@ -153,7 +153,7 @@ var loadInterval = setInterval(pulse, 1000);
 		<div id='mainContentArea'></div><!-- DO NOT REMOVE - this is where the specific page (ex: homepage, product, category) content is going to go -->
 	</div>
 	<div id="footerBanner">
-		<div id="weShipEverywhere">
+		<div id="weShipEverywhere" class="pointer" onClick="return showContent('company',{'show':'shipping'})">
 			<img src="img/footerglobe.png" /> We Ship Everywhere!
 		</div>
 		
@@ -248,11 +248,12 @@ the homepageTemplate template is loaded into mainContentArea by default when the
 
 	<ul data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListTemplateNoQuickview; hide_summary:1; before:<h2 class='underlineGold'>Featured Products</h2>; withReviews:1; items_per_page: 3;" class='listStyleNone fluidList clearfix noPadOrMargin productList featuredProducts'></ul>
 	
-	<ul data-bind="var: category(@subcategoryDetail); format: categoryList; extension: store_navcats; loadsTemplate: categoryListTemplate; detail:max; before:<h2 class='underlineGold'>Shop</h2>;" class='listStyleNone fluidList clearfix noPadOrMargin categoryList homepageSubCats'></ul>
+	<ul id='homepageShopList'  data-bind='var: elastic-native({"size":"100","mode":"elastic-native","filter" : {"and" : [{"query" : {"query_string" : {"query" : "LLTR-*","fields" : ["pid"]}}},{"not" : {"query" : {"query_string" : {"query" : "LLTR-W-*","fields" : ["pid"]}}}}]}}); format: productSearch; extension: myRIA; loadsTemplate: productListTemplateResults; before:<h2 class="underlineGold">Shop</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
 	
 	<!--
-	<p data-bind="var: category(%page.description); format:wiki; wikiFormats:myRIA; editor: textarea;"></p>
 	<ul id='homeProdSearchBestSellers' data-bind='var: elastic-native({"size":"4","mode":"elastic-native","filter":{"term":{"tags":"IS_BESTSELLER"}}}); format: productSearch; extension: myRIA; loadsTemplate: productListTemplateResults; before:<h2>Best Sellers</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
+	<ul data-bind="var: category(@subcategoryDetail); format: categoryList; extension: store_navcats; loadsTemplate: categoryListTemplate; detail:max; before:<h2 class='underlineGold'>Shop</h2>;" class='listStyleNone fluidList clearfix noPadOrMargin categoryList homepageSubCats'></ul>
+	<p data-bind="var: category(%page.description); format:wiki; wikiFormats:myRIA; editor: textarea;"></p>
 	-->
 </div>
 
@@ -341,7 +342,7 @@ remember to NOT put the button inside the 'onclick' container or two events will
 	</div>
 </li>
 
-<li id='productListTemplateNoQuickview' class='loadingBG  ' onMouseOver="$('.quickView',$(this)).show();" onMouseOut="$('.quickView').hide();" >
+<li id='productListTemplateNoQuickview' class='loadingBG  ' >
 	
 	<div onClick="showContent('product',{'pid':$(this).attr('data-pid')})" data-bind='var:product(pid);format:assignAttribute; attribute:data-pid;' class='pointer'>
 		<div class='prodThumbContainer'>

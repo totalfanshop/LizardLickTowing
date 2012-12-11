@@ -7,6 +7,7 @@ DEFAULT AND UTILITY STYLES
 body {
 	background: black;
 	font-family: Arial, sans-serif;
+	margin: 0px;
 } 
 
 h1, h2, h3, h4, h5, h6 { 
@@ -53,6 +54,10 @@ LAYOUT
 	width: 100%;
 	/* background: url(img/lizardSkin_single.gif) center top repeat; */
 	background: url(img/lizard_texture.png) center top repeat-y;
+}
+
+.contentHolder {
+	padding-top: 8px;
 }
 
 /************************************
@@ -163,6 +168,7 @@ HEADER STYLES
 #globalNav {
 	margin-bottom: 20px;
 	color: #bab500;
+	margin-right: 8px;
 }
 
 #globalNav a {
@@ -336,4 +342,8 @@ JQUERYUI STYLE FIXES
 
 .ui-accordion .ui-accordion-header .ui-icon {
     display: inline-block;
+}
+
+#mainContentArea_company {
+	display: none;
 }
