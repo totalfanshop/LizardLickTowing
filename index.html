@@ -59,7 +59,8 @@ css files should be included before any .js file to ensure they are downloaded i
 
 
 <script type="text/javascript">
-app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
+//app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
+app.u.loadScript(app.vars.baseURL+"init.js");
 
 
 
@@ -247,6 +248,31 @@ the homepageTemplate template is loaded into mainContentArea by default when the
 
 
 	<ul data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListTemplateNoQuickview; hide_summary:1; before:<h2 class='underlineGold'>Featured Products</h2>; withReviews:1; items_per_page: 3;" class='listStyleNone fluidList clearfix noPadOrMargin productList featuredProducts'></ul>
+	
+<!--
+EXPANDED VERSION OF QUERY FILTER FOR BELOW
+"filter" : {
+	"and" : [
+	{
+		"query" : {
+				"query_string" : {
+					"query" : "LLTR-*",
+					"fields" : ["pid"]
+				}
+			}
+	},
+	{
+		"not" : {
+			"query" : {
+				"query_string" : {
+					"query" : "LLTR-W-*",
+					"fields" : ["pid"]
+				}
+			}
+		}
+	}]
+}
+-->
 	
 	<ul id='homepageShopList'  data-bind='var: elastic-native({"size":"100","mode":"elastic-native","filter" : {"and" : [{"query" : {"query_string" : {"query" : "LLTR-*","fields" : ["pid"]}}},{"not" : {"query" : {"query_string" : {"query" : "LLTR-W-*","fields" : ["pid"]}}}}]}}); format: productSearch; extension: myRIA; loadsTemplate: productListTemplateResults; before:<h2 class="underlineGold">Shop</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
 	
