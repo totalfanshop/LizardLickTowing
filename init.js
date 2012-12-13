@@ -24,7 +24,7 @@ app.rq.push(['extension',1,'analytics_google','extensions/analytics_google.js','
 
 //add tabs to product data.
 app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
-	//$( ".tabbedProductContent",$('#productTemplate_'+app.u.makeSafeHTMLId(P.pid))).tabs();
+	$( ".tabbedProductContent",$('#productTemplate_'+app.u.makeSafeHTMLId(P.pid))).tabs();
 	}]);
 
 app.rq.push(['script',0,(document.location.protocol == 'file:') ? app.vars.httpURL+'jquery/config.js' : app.vars.baseURL+'jquery/config.js']); //The config.js is dynamically generated.
