@@ -272,9 +272,10 @@ EXPANDED VERSION OF QUERY FILTER FOR BELOW
 		}
 	}]
 }
+	<ul id='homepageShopList'  data-bind='var: elastic-native({"size":"100","mode":"elastic-native","filter" : {"and" : [{"query" : {"query_string" : {"query" : "LLTR-*","fields" : ["pid"]}}},{"not" : {"query" : {"query_string" : {"query" : "LLTR-W-*","fields" : ["pid"]}}}}]}}); format: productSearch; extension: myRIA; loadsTemplate: productListTemplateResults; before:<h2 class="underlineGold">Shop</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
 -->
 	
-	<ul id='homepageShopList'  data-bind='var: elastic-native({"size":"100","mode":"elastic-native","filter" : {"and" : [{"query" : {"query_string" : {"query" : "LLTR-*","fields" : ["pid"]}}},{"not" : {"query" : {"query_string" : {"query" : "LLTR-W-*","fields" : ["pid"]}}}}]}}); format: productSearch; extension: myRIA; loadsTemplate: productListTemplateResults; before:<h2 class="underlineGold">Shop</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
+	<ul data-bind='var: list($lizardlick.@products);format: productList; extension: store_prodlist; loadsTemplate: productListTemplateNoQuickview; hide_summary: 1; items_per_page: 100; before:<h2 class="underlineGold">Shop</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList featuredProducts'></ul>
 	
 	<!--
 	<ul id='homeProdSearchBestSellers' data-bind='var: elastic-native({"size":"4","mode":"elastic-native","filter":{"term":{"tags":"IS_BESTSELLER"}}}); format: productSearch; extension: myRIA; loadsTemplate: productListTemplateResults; before:<h2>Best Sellers</h2>;' class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>

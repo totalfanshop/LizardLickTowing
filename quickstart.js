@@ -127,7 +127,9 @@ else if ("onhashchange" in window)	{ // does the browser support the hashchange 
 else	{
 	app.u.throwMessage("You appear to be running a very old browser. Our app will run, but may not be an optimal experience.");
 	// wow. upgrade your browser. should only get here if older than:
-	// Google Chrome 5, Safari 5, Opera 10.60, Firefox 3.6 and Internet Explorer 8 
+	// Google Chrome 5, Safari 5, Opera 10.60, Firefox 3.6 and Internet Explorer 8
+	
+	//NOTE: does not trigger in IE9 running IE7 or IE8 standards mode
 	}
 
 
@@ -397,11 +399,18 @@ else	{
 //cat page handling.
 				if(tagObj.navcat)	{
 //					app.u.dump("BEGIN myRIA.callbacks.showPageContent ["+tagObj.navcat+"]");
+
 					if(typeof app.data['appCategoryDetail|'+tagObj.navcat] == 'object' && !$.isEmptyObject(app.data['appCategoryDetail|'+tagObj.navcat]))	{
 						tmp = app.data['appCategoryDetail|'+tagObj.navcat]
 						}
 					if(typeof app.data['appPageGet|'+tagObj.navcat] == 'object' && typeof app.data['appPageGet|'+tagObj.navcat]['%page'] == 'object' && !$.isEmptyObject(app.data['appPageGet|'+tagObj.navcat]['%page']))	{
 						tmp['%page'] = app.data['appPageGet|'+tagObj.navcat]['%page'];
+						}
+					if(tagObj.lists.length)	{
+						var L = tagObj.lists.length;
+						for(var i = 0; i < L; i += 1)	{
+							tmp[tagObj.lists[i]] = app.data['appNavcatDetail|'+tagObj.lists[i]];
+							}
 						}
 					tmp.session = app.ext.myRIA.vars.session;
 //a category page gets translated. A product page does not because the bulk of the product data has already been output. prodlists are being handled via buildProdlist
@@ -945,7 +954,6 @@ for legacy browsers. That means old browsers will use the anchor to retain 'back
 				else if(infoObj.performTransition == false)	{
 					
 					}
-					
 				else if(infoObj.parentID && typeof app.ext.myRIA.pageTransition == 'function')	{
 
 app.ext.myRIA.pageTransition($old,$('#'+infoObj.parentID));
@@ -1326,7 +1334,7 @@ P.listID (buyer list id)
 					var msg = app.u.errMsgObject('Rename this file as index.html to decrease the likelyhood of accidentally saving over it.',"MVC-INIT-MYRIA_1000")
 					msg.persistant = true;
 					app.u.throwMessage(msg);
-					r.pageType = '404';
+					r.pageType = 'homepage';
 					}
 //the url in the domain may or may not have a slash at the end. Check for both
 				else if(url == zGlobals.appSettings.http_app_url || url+"/" == zGlobals.appSettings.http_app_url || url == zGlobals.appSettings.https_app_url || url+"/" == zGlobals.appSettings.https_app_url)	{
@@ -1439,11 +1447,11 @@ P.listID (buyer list id)
 			buildRelativePath : function(P)	{
 				var relativePath; //what is returned.
 				switch(P.pageType)	{
+				case 'homepage' :
+					relativePath = '';
+					break;
 				case 'product':
 					relativePath = 'product/'+P.pid+'/';
-					break;
-				case 'homepage':
-					relativePath = '';
 					break;
 				case 'category':
 
@@ -1749,7 +1757,9 @@ return r;
 					
 					}
 				else	{
-					$('#mainContentArea').append(app.renderFunctions.createTemplateInstance(P.templateID,parentID));
+					var $content = app.renderFunctions.createTemplateInstance(P.templateID,parentID);
+					$content.addClass("displayNone");
+					$('#mainContentArea').append($content);
 					app.ext.myRIA.u.bindNav('#sideline a');
 					app.calls.appProfileInfo.init(app.vars.profile,{'callback':'showCompany','extension':'myRIA','infoObj':P,'parentID':parentID},'mutable');
 					app.model.dispatchThis();
@@ -1924,10 +1934,14 @@ return r;
 			parseAnchor : function(str)	{
 //					app.u.dump("GOT HERE");
 					var tmp1 = str.substring(1).split('?');
-					var tmp2 = tmp1[1].split('=');
 					var P = {};
 					P.pageType = tmp1[0];
-					P[tmp2[0]] = tmp2[1];
+					if(tmp1.length > 1){
+						var tmp2 = tmp1[1].split('=');
+						P[tmp2[0]] = tmp2[1];
+					} else {
+						// Should reach here in case of href="#homepage" (or anything with no params, but #homepage is the only use-case
+					}
 //					app.u.dump(P);
 					return P;
 				}, //parseAnchor
@@ -2109,19 +2123,22 @@ buyer to 'take with them' as they move between  pages.
 
 var numRequests = 0; //will be incremented for # of requests needed. if zero, execute showPageContent directly instead of as part of ping. returned.
 var catSafeID = P.navcat;
+
 var myAttributes = new Array(); // used to hold all the 'page' attributes that will be needed. passed into appPageGet request.
 var elementID; //used as a shortcut for the tag ID, which is requied on a search element. recycled var.
 
 var tagObj = P;  //used for ping and in handleCallback if ping is skipped.
-tagObj.callback = 'showPageContent'
+tagObj.callback = 'showPageContent';
 tagObj.searchArray = new Array(); //an array of search datapointers. added to _tag so they can be translated in showPageContent
 tagObj.extension = 'myRIA'
+tagObj.lists = new Array(); // all the list id's needed.
+
 
 //goes through template.  Put together a list of all the data needed. Add appropriate calls to Q.
 app.templates[P.templateID].find('[data-bind]').each(function()	{
 
 	var $focusTag = $(this);
-		
+	
 //proceed if data-bind has a value (not empty).
 	if(app.u.isSet($focusTag.attr('data-bind'))){
 		
@@ -2193,6 +2210,16 @@ app.templates[P.templateID].find('[data-bind]').each(function()	{
 					myAttributes.push(tmpAttr);  //set value to the actual value
 					}				
 				
+				}
+			else if(namespace == 'list' && attribute.charAt(0) == '$')	{
+				var listPath = attribute.split('.')[0]
+				tagObj.lists.push(listPath); //attribute formatted as $listname.@products
+				numRequests = app.ext.store_navcats.calls.appNavcatDetail.init(listPath);
+				}
+			else if(namespace == 'list')	{
+				// no src is set.
+				app.u.throwGMessage("In myRIA.u.buildQueriesByTemplate, namespace set to list but invalid SRC ["+attribute+"] is specified... so we don't know where to get the data.");
+				app.u.dump(bindData);
 				}
 			else if(namespace == 'category' && attribute == '@subcategoryDetail' )	{
 //				app.u.dump(" -> category(@subcategoryDetail) found");

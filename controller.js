@@ -577,15 +577,22 @@ app.u.handleCallback(tagObj);
 
 		handleCallback : function(tagObj)	{
 //			app.u.dump("BEGIN u.handleCallback");
-			var callback;
 			if(tagObj && tagObj.datapointer){app.data[tagObj.datapointer]['_rtag'] = tagObj} //updates obj in memory to have latest callback.
 			if(tagObj && tagObj.callback){
-//				app.u.dump(" -> executing callback ("+tagObj.callback+") in extension ("+tagObj.extension+")");
+//				app.u.dump(" -> callback exists");
+//				app.u.dump(tagObj.callback);
+				if(typeof tagObj.callback == 'function')	{app.u.dump(" -> executing anonymous function."); tagObj.callback(tagObj);}
+				else	{
+//				app.u.dump(" -> callback is not an anonymous function.");
+					var callback;
 //most callbacks are likely in an extension, but support for 'root' callbacks is necessary.
 //save path to callback so that we can verify the onSuccess is a function before executing (reduce JS errors with this check)
-				callback = tagObj.extension ? app.ext[tagObj.extension].callbacks[tagObj.callback] : app.callbacks[tagObj.callback];
-				if(typeof callback.onSuccess == 'function')
-					callback.onSuccess(tagObj);
+					callback = tagObj.extension ? app.ext[tagObj.extension].callbacks[tagObj.callback] : app.callbacks[tagObj.callback];
+					if(typeof callback.onSuccess == 'function')	{
+						callback.onSuccess(tagObj);
+						}
+					else	{}//callback defined as string, but callback.onsuccess is not a function.
+					}
 				}
 			else	{
 //				app.u.dump(" -> no callback was defined.");
@@ -655,7 +662,7 @@ it'll then set app.rq.push to mirror this function.
 		printByElementID : function(id)	{
 //				app.u.dump("BEGIN myRIA.a.printByElementID");
 			if(id && $('#'+id).length)	{
-				var html="<html><body style='font-family:sans-serif;'>";
+				var html="<html><style>@media print{.pageBreak {page-break-after:always}}</style><body style='font-family:sans-serif;'>";
 				html+= document.getElementById(id).innerHTML;
 				html+="</body></html>";
 				
@@ -720,6 +727,7 @@ it'll then set app.rq.push to mirror this function.
 //this should only be used for app errors (errors thrown from within the MVC, not as a result of an API call, in which case throwMessage should be used (handles request errors nicely)
 		throwGMessage : function(err,parentID){
 			var msg = this.errMsgObject("Well this is embarrassing. Something bad happened. Please try that again. If this error persists, please contact the site administrator.<br \/>Err: "+err+"<br \/>Dev: console may contain additional details.","#");
+			app.u.dump("FROM throwGMessage: "+err);
 			if(parentID)	{msg.parentID = parentID}
 			this.throwMessage(msg);
 //			app.u.dump(err);
@@ -1392,7 +1400,7 @@ a word */
 				}
 			return r;
 			}, //makeSafeHTMLId
-//if bool === false, then no # in response. allows for this code to be used for more than just ID's (like data attributes)
+
 		jqSelector : function(selector,str){
 			if (undefined == str) { str = new String(""); }	// fix undefined issue
 			return ((selector) ? selector : '')+str.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
@@ -1829,7 +1837,7 @@ most likely, this will be expanded to support setting other data- attributes. ##
 //			app.u.dump(data);
 			if(!$.isEmptyObject(data) && selector)	{
 //				app.u.dump(" -> executing handleTranslation. $(selector).length: "+$(selector).length);
-				this.handleTranslation($(selector),data)
+				this.handleTranslation(typeof selector == 'object' ? selector : $(selector),data); //selector can be a string or a jquery object.
 				}
 			else	{
 				app.u.dump("WARNING! - either selector ["+selector+"] or data [typeof: "+typeof data+"] was not set in translateSelector");
@@ -1869,15 +1877,24 @@ $r.find('[data-bind]').each(function()	{
 //	app.u.dump(" -> value: "+value);
 
 	if(Number(value) == 0 && bindData.hideZero)	{
-//		app.u.dump(" -> got to zero section");
-//		app.u.dump(" -> $focusTag.data('bind'): "+$focusTag.data('bind'));
-//		app.u.dump(' -> no pretext/posttext or anything else done because value = 0 and hideZero = '+bindData.hideZero);			
+//do nothing. value is zero and zero should be skipped.
 		}
-//in some cases, in the UI, we load another template that's shared, such as fileImport in admin_medialib extension
-//in this case, the original data is passed through and no format translation is done on the element itself.
+// ### NOTE - at some point, see if this code can be moved inot the render format itself so that no special handler needs to exist.
+//did a quick try on this that failed. Need to revisit this when time permits.
 	else if(bindData.loadsTemplate && bindData.format == 'loadsTemplate')	{
-//		app.u.dump("NOTICE! - doing a loads template with no translation on the element itself (no var/val set)");
-		$focusTag.append(app.renderFunctions.transmogrify({},bindData.loadsTemplate,data));
+//in some cases, especially in the UI, we load another template that's shared, such as fileImport in admin_medialib extension
+//in this case, the original data is passed through and no format translation is done on the element itself.
+// OR, if a var is specified, then only that object within the parent data is passed.
+//Examples:
+// -> admin_tasks uses loadsTemplate with NO var to recycle 'create' template for editing.
+// -> admin_orders uses a var to take advantage of 1 address template for billing and shipping. 
+		if(bindData['var'])	{
+			$focusTag.append(app.renderFunctions.transmogrify({},bindData.loadsTemplate,data[app.renderFunctions.parseDataVar(bindData['var'])]));
+			}
+		else{
+			$focusTag.append(app.renderFunctions.transmogrify({},bindData.loadsTemplate,data));
+			}
+		
 		}
 	else if(value)	{
 		if(app.u.isSet(bindData.className)){$focusTag.addClass(bindData.className)} //css class added if the field is populated. If the class should always be there, add it to the template.
@@ -1984,7 +2001,9 @@ return $r;
 					value = app.u.getObjValFromString(attributeID,data,'.') || data[attributeID]; //attempt to set value based on most common paths
 					}
 				else if(namespace == 'cart' || namespace == 'order')	{
+//					app.u.dump(v);
 					value = app.u.getObjValFromString(attributeID,data,'/') || data[attributeID]; //attempt to set value based on most common paths
+//					if(v == 'order(ship)')	{app.u.dump(" !!!!!!!!!! v = "); app.u.dump(value);}
 					}
 				else	{
 					value = app.u.getObjValFromString(attributeID,data,'.') || data[attributeID]; //attempt to set value based on most common paths
@@ -2292,7 +2311,7 @@ $tmp.empty().remove();
 			for(var i = 0; i < L; i += 1)	{
 //				app.u.dump(i+") reached.");
 				$o = app.renderFunctions.transmogrify(data.value[i],data.bindData.loadsTemplate,data.value[i]);
-				app.u.dump(" ---> appended");
+//				app.u.dump(" ---> appended");
 				if(data.value[i].id){} //if an id was set, do nothing.
 				else	{$o.removeAttr('id').attr('data-obj_index',i)} //nuke the id. it's the template id and will be duplicated several times. set index for easy lookup later.
 				$tag.append($o);
