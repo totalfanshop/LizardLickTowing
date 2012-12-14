@@ -22,7 +22,9 @@ function getNextTabId() {
 }
 
 function isLocal( anchor ) {
-	alert(anchor.href.replace( rhash, "" )+".."+location.href.replace( rhash, "" ).replace( /\s/g, "%20" ));
+	//alert(anchor.href.replace( rhash, "" )+".."+location.href.replace( rhash, "" ).replace( /\s/g, "%20" ));
+	return true;
+	/*
 	return anchor.hash.length > 1 &&
 		anchor.href.replace( rhash, "" ) ===
 			location.href.replace( rhash, "" )
@@ -30,6 +32,7 @@ function isLocal( anchor ) {
 				// Safari 5.1 doesn't encode spaces in window.location
 				// but it does encode spaces from anchors (#8777)
 				.replace( /\s/g, "%20" );
+	*/
 }
 
 $.widget( "ui.mytabs", {
