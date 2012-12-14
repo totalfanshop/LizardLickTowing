@@ -35,7 +35,7 @@ app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 				$(this).attr("id", "spec_"+safePID+"_" + index.toString());
 			})
 			setTimeout(function(){
-				$tabContainer.tabs({ panelTemplate: "<div class='thisIsBad'></div>" });
+				$tabContainer.mytabs({ panelTemplate: "<div class='thisIsBad'></div>" });
 				}, 5000);
 			}
 	}]);
