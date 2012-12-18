@@ -133,6 +133,7 @@ HEADER STYLES
 }
 
 #headerSearch .productSearchKeyword {
+	-webkit-appearance: none;
 	color: white;
 	border: none;
 	
@@ -163,6 +164,7 @@ HEADER STYLES
 	position: absolute;
 	right: 4px;
 	top: 4px;
+	-webkit-appearance: none;
 }
 
 #globalNav {
