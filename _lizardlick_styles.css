@@ -276,7 +276,7 @@ CATEGORY PAGE STYLES
 
 .categoryProdList li {
 	width: 280px;
-	height: 450px;
+	height: 440px;
 	margin: 4px 4px;
 	background: white;
 	padding: 8px;
@@ -294,7 +294,8 @@ CATEGORY PAGE STYLES
 
 .categoryProdList .prodName {
 	display: block;
-	height: 60px;
+	height: 50px;
+	font-size: 1em;
 }
 
 .categoryProdList h1, .categoryProdList h2, .categoryProdList h3, .categoryProdList h4, .categoryProdList h5, .categoryProdList h6 {
