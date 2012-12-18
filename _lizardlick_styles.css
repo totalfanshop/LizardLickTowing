@@ -263,6 +263,46 @@ HOMEPAGE STYLES
 
 /************************************
 
+CATEGORY PAGE STYLES
+
+************************************/
+.categoryPrettyName {
+	margin-bottom: 20px;
+}
+
+.categoryProdList {
+	margin: 20px 0px;
+}
+
+.categoryProdList li {
+	width: 280px;
+	height: 450px;
+	margin: 4px 4px;
+	background: white;
+	padding: 8px;
+}
+
+.categoryProdList li img {
+	margin-bottom: 15px;
+}
+
+.categoryProdList .price {
+	font-size: 1.5em;
+	/* display: block; */
+	font-weight: bold;
+}
+
+.categoryProdList .prodName {
+	display: block;
+	height: 60px;
+}
+
+.categoryProdList h1, .categoryProdList h2, .categoryProdList h3, .categoryProdList h4, .categoryProdList h5, .categoryProdList h6 {
+	color: black;
+}
+
+/************************************
+
 FOOTER STYLES
 
 ************************************/

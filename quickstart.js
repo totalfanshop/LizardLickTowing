@@ -34,6 +34,7 @@ var myRIA = function() {
 			'productListTemplate',
 			'productListTemplateNoQuickview',
 			'productListTemplateHomepageShopList',
+			'productListCategoryTemplate',
 			'productListTemplateATC',
 			'productListTemplateBuyerList',
 			'productListTemplateResults',

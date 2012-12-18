@@ -411,18 +411,27 @@ if(app.u.isSet(data.value))	{
 //	if(!app.data['appCategoryDetail|.'] || !app.data['appCategoryDetail|.'].pretty)	{
 //		app.data['appCategoryDetail|.'].pretty = 'Home';
 //		}
-	
-	$tag.append(app.renderFunctions.transmogrify({'id':'.','catsafeid':'.'},data.bindData.loadsTemplate,app.data['appCategoryDetail|.']));
+	var reachedRoot = false;
+	/*if(reachedRoot){
+		$tag.append(app.renderFunctions.transmogrify({'id':'.','catsafeid':'.'},data.bindData.loadsTemplate,app.data['appCategoryDetail|.']));
+	}*/
 // homepage has already been rendered. if path == ., likely we r on a product page, arriving from homepage. don't show bc.
 	if(data.value == '.'){}
 	else	{
-		for(var i = 1; i < L; i += 1)	{
+		for(var i = 0; i < L; i += 1)	{
 			s += pathArray[i];
-		//	app.u.dump(" -> "+i+" s(path): "+s);
-			$tag.append(app.renderFunctions.transmogrify({'id':'.','catsafeid':s},data.bindData.loadsTemplate,app.data['appCategoryDetail|'+s]));
-			s += '.';
+			
+			if(!reachedRoot) {
+				reachedRoot = (zGlobals.appSettings.rootcat === s);
 			}
+			if(reachedRoot) {
+			//	app.u.dump(" -> "+i+" s(path): "+s);
+				$tag.append(app.renderFunctions.transmogrify({'id':'.','catsafeid':s},data.bindData.loadsTemplate,app.data['appCategoryDetail|'+s]));
+			}
+			if(i!=0)
+				s += '.';
 		}
+	}
 	
 
 	

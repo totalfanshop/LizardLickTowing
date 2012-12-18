@@ -52,7 +52,7 @@ css files should be included before any .js file to ensure they are downloaded i
 -->
 <link rel="stylesheet" type="text/css" href="jqueryui/lizardLick_theme/jquery-ui-1.9.2.custom.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script> 
+<script src="jquery.ui.widget.min.js"></script> 
 <script src="customTabs.js"></script>
 
 <script type="text/javascript" src="loadscript.js"></script>
@@ -304,18 +304,16 @@ don't modify the 'data-templateid' unless you are changing template names and up
 
 	<ul class='breadcrumb clearfix noPadOrMargin fluidList' data-bind='var: category(id); format:breadcrumb; extension:store_navcats; loadsTemplate: breadcrumbTemplate;'></ul>
 
+	<h2 class="underlineGold categoryPrettyName" data-bind="var: category(pretty); format: text; editor: text;"></h2>
+	
+	<ul data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListCategoryTemplate; withReviews:1; items_per_page: 25;" class='listStyleNone fluidList clearfix noPadOrMargin productList categoryProdList'></ul>
+
+	<!-- Unused Defaults
 	<img data-bind="var: category(%page.banner1); format: banner; editor: banner; height:250; width:750; extension: myRIA;" />
-
-	<h2 data-bind="var: category(%page.header); format: text; editor: text;"></h2>
-	
 	<p data-bind="var: category(%page.description); format:wiki; wikiFormats:myRIA; editor: textarea;"></p>
-	
 	<ul data-bind="var: category(@subcategoryDetail); format: categoryList; extension: store_navcats; loadsTemplate: categoryListTemplate; detail:max;" class='listStyleNone fluidList clearfix noPadOrMargin categoryList'></ul>
-
-	<ul data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListTemplate; withReviews:1; items_per_page: 25;" class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul>
-	
 	<p data-bind="var: category(%page.description2); format:wiki; wikiFormats:myRIA; editor: textarea;"></p>
-
+	-->
 		
 </div>
 
@@ -401,6 +399,23 @@ remember to NOT put the button inside the 'onclick' container or two events will
 		
 		
 		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
+<!-- 	<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
+	</div>
+</li>
+
+<li id='productListCategoryTemplate' class='loadingBG  ' >
+	
+	<div onClick="showContent('product',{'pid':$(this).attr('data-pid')})" data-bind='var:product(pid);format:assignAttribute; attribute:data-pid;' class='pointer'>
+		<h3 data-bind='var: product(zoovy:prod_name); format:text; className: prodName;'></h3>
+		<div class='prodThumbContainer'>
+		<img src='blank.gif' class='prodThumb' data-bind='var: product(zoovy:prod_image1); format:imageURL; bgcolor: c50878;' width='280' height='340' />
+		</div>
+		
+	
+		<span data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true; className:price;'></span>
+		
+		
+		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite floatRight'></span>
 <!-- 	<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
 	</div>
 </li>
