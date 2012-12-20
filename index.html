@@ -2,7 +2,6 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>QuickStart</title>
 
 <meta name="description" content="" id='metaDescription' />
 <meta name="keywords" content="" id='metaKeywords' />
@@ -22,7 +21,7 @@ var _gaq = _gaq || {'push':function(){}} //here for testing. REPLACE BEFORE DEPL
 var myCreole;
 
 var app = {vars:{
-	"release":"20121218091200",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
+	"release":"20121220073200",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
 	"baseURL":"",
 	"httpsURL":"https://ssl.zoovy.com/s=www.stage3motorsports.com/",
 	"httpURL":"http://www.87aba6c.hoth.zoovy.net/"
@@ -398,8 +397,8 @@ remember to NOT put the button inside the 'onclick' container or two events will
 		<h6 data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true; className:price; pretext: Our Price: ;'></h6>
 		
 		
-		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
-<!-- 	<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
+<!--		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
+		<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
 	</div>
 </li>
 
