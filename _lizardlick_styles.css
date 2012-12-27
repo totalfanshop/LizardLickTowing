@@ -421,7 +421,9 @@ div#footerNewsletterForm {
 	padding: 8px 0px;
 }
 
-
+#footerLinks .smallPrint {
+	font-size: .85em;
+}
 
 /*****************************
 
