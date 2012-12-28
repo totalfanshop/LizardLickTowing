@@ -241,7 +241,9 @@ else	{
 				tmp.session = app.ext.myRIA.vars.session;
 				if(typeof app.data['appReviewsList|'+pid] == 'object')	{
 					tmp['reviews'] = app.ext.store_product.u.summarizeReviews(pid); //generates a summary object (total, average)
-					tmp['reviews']['@reviews'] = app.data['appReviewsList|'+pid]['@reviews']
+					tmp['reviews']['@reviews'] = app.data['appReviewsList|'+pid]['@reviews'];
+					//app.u.dump("Dumping Reviews");
+					//app.u.dump(app.data['appReviewsList|'+pid]['@reviews']);
 					}
 //				if(pid == 'AXA-TEST-B2')	{app.u.dump(tmp)}
 //				app.u.dump("Rendering product template for: "+pid);
