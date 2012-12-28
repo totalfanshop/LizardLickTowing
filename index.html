@@ -364,8 +364,8 @@ remember to NOT put the button inside the 'onclick' container or two events will
 		<h6 data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true; className:price; pretext: Our Price: ;'></h6>
 		
 		
-		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
-<!-- 	<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
+		<span data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
+<!-- 	<span data-bind='var: reviews(reviews.total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
 	</div>
 </li>
 
@@ -381,8 +381,8 @@ remember to NOT put the button inside the 'onclick' container or two events will
 		<h6 data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true; className:price; pretext: Our Price: ;'></h6>
 		
 		
-		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
-<!-- 	<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
+		<span data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
+<!-- 	<span data-bind='var: reviews(reviews.total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
 	</div>
 </li>
 
@@ -398,8 +398,8 @@ remember to NOT put the button inside the 'onclick' container or two events will
 		<h6 data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true; className:price; pretext: Our Price: ;'></h6>
 		
 		
-<!--		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
-		<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
+<!--		<span data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
+		<span data-bind='var: reviews(reviews.total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
 	</div>
 </li>
 
@@ -415,8 +415,8 @@ remember to NOT put the button inside the 'onclick' container or two events will
 		<span data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true; className:price;'></span>
 		
 		
-		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite floatRight'></span>
-<!-- 	<span data-bind='var: reviews(total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
+		<span data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite floatRight'></span>
+<!-- 	<span data-bind='var: reviews(reviews.total); format:text; pretext: from ;posttext: reviews; className:numReviews;'></span> -->
 	</div>
 </li>
 
@@ -436,7 +436,7 @@ container ul should have lineItemProdlist class on it instead of productList
 	
 		<h6 data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true; className:price; pretext: Our Price: ;'></h6>
 		
-		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
+		<span data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
 
 		<form data-bind='var: product(pid); format:atcForm; extension:store_product;' class='prodListAddToCartForm marginBottom clearfix' id='accessoriesAddToCartFrm' action='#' onSubmit="app.ext.myRIA.u.handleAddToCart(this.id,{'action':'modal'}); return false;">
 		
@@ -479,7 +479,7 @@ container ul should have lineItemProdlist class on it instead of productList
 				</div>
 			</div>
 		</div>
-		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite floatRight' ></span>
+		<span data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite floatRight' ></span>
 
 		<h5 data-bind='var: product(zoovy:prod_name); format:text;'></h5>
 	
@@ -723,8 +723,8 @@ It's done this way because ID's hard coded into template are bad mojo (templates
 	<div data-bind='var: product(zoovy:ship_latency); format:text;pretext:Normally ships in ;posttext: day(s);' class='latency'></div>
 	
 	<section id='prodViewerReviewSummary' class='marginBottom'>
-		<span data-bind='var: product(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
-		<span data-bind='var: reviews(total); format:text;posttext: from ;posttext: reviews; className:numReviews;'></span>
+		<span data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite'></span>
+		<span data-bind='var: reviews(reviews.total); format:text;posttext: from ;posttext: reviews; className:numReviews;'></span>
 	</section>
 	
 	<div id="prodDesc" data-bind='var: product(zoovy:prod_desc); format:wiki; wikiFormats:myRIA;'></div>
