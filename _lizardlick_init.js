@@ -38,6 +38,18 @@ app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 			$tabContainer.mytabs({});
 			
 			}
+	
+	var $pog = $('#JSONPogDisplay_'+P.pid);
+	//alert('#JSONPogDisplay_'+P.pid);
+	var data = app.data['appProductGet|'+P.pid];
+	$('option', $pog).each(function(){
+		if(typeof data['@inventory'][P.pid + ':A0' + $(this).val()] !== "undefined"){
+			if(data['@inventory'][P.pid + ':A0' + $(this).val()].inv == 0){
+				$(this).attr("disabled","disabled").addClass("strikethrough");
+			}
+		}
+	});
+	
 	}]);
 
 app.rq.push(['script',0,(document.location.protocol == 'file:') ? app.vars.httpURL+'jquery/config.js' : app.vars.baseURL+'jquery/config.js']); //The config.js is dynamically generated.
