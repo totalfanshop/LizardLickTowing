@@ -40,12 +40,12 @@ app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 			}
 	
 	var $pog = $('#JSONPogDisplay_'+P.pid);
-	//alert('#JSONPogDisplay_'+P.pid);
 	var data = app.data['appProductGet|'+P.pid];
 	$('option', $pog).each(function(){
-		if(typeof data['@inventory'][P.pid + ':A0' + $(this).val()] !== "undefined"){
-			var option = $(this).attr('id');
-			option = option.replace("option_","");
+		var option = $(this).attr('id');
+		option = option.replace("option_","");
+		if(typeof data['@inventory'][P.pid + ':' + option] !== "undefined"){
+			
 			if(data['@inventory'][P.pid + ':' + option].inv == 0){
 				$(this).attr("disabled","disabled").addClass("strikethrough");
 			}
