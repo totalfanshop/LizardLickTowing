@@ -45,7 +45,6 @@ app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 		var option = $(this).attr('id');
 		option = option.replace("option_","");
 		if(typeof data['@inventory'][P.pid + ':' + option] !== "undefined"){
-			
 			if(data['@inventory'][P.pid + ':' + option].inv == 0){
 				$(this).attr("disabled","disabled").addClass("strikethrough");
 			}
