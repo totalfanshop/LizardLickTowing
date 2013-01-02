@@ -44,7 +44,9 @@ app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 	var data = app.data['appProductGet|'+P.pid];
 	$('option', $pog).each(function(){
 		if(typeof data['@inventory'][P.pid + ':A0' + $(this).val()] !== "undefined"){
-			if(data['@inventory'][P.pid + ':A0' + $(this).val()].inv == 0){
+			var option = $(this).attr('id');
+			option = option.replace("option_","");
+			if(data['@inventory'][P.pid + ':' + option].inv == 0){
 				$(this).attr("disabled","disabled").addClass("strikethrough");
 			}
 		}
