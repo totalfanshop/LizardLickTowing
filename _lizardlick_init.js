@@ -43,10 +43,12 @@ app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 	var data = app.data['appProductGet|'+P.pid];
 	$('option', $pog).each(function(){
 		var option = $(this).attr('id');
+		if(typeof option !== "undefined"){
 		option = option.replace("option_","");
-		if(typeof data['@inventory'][P.pid + ':' + option] !== "undefined"){
-			if(data['@inventory'][P.pid + ':' + option].inv == 0){
-				$(this).attr("disabled","disabled").addClass("strikethrough");
+			if(typeof data['@inventory'][P.pid + ':' + option] !== "undefined"){
+				if(data['@inventory'][P.pid + ':' + option].inv == 0){
+					$(this).attr("disabled","disabled").addClass("strikethrough");
+				}
 			}
 		}
 	});
