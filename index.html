@@ -22,7 +22,7 @@ var _gaq = _gaq || {'push':function(){}} //here for testing. REPLACE BEFORE DEPL
 var myCreole;
 
 var app = {vars:{
-	"release":"20130104100500",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
+	"release":"20130108134900",  //increment this with each change. should solve caching issues. format: YYYYMMDDHHMMSS
 	"baseURL":"",
 	"httpsURL":"https://ssl.zoovy.com/s=www.87aba6c.hoth.zoovy.net/",
 	"httpURL":"http://www.87aba6c.hoth.zoovy.net/"
@@ -94,7 +94,8 @@ app.u.loadScript(app.vars.baseURL+"_lizardlick_init.js");
 </table>
 -->
 
-<h1 >Get Licked! Wait For It...</h1>
+<h1 class="loadingNonSecure">Get Licked! Wait For It...</h1>
+<h1 class="loadingSecure">Upgrading to a Secure Session...</h1>
 <div class="loadingBG" id="appLoadPercentage">0%</div>
 <script type="text/javascript">
 pulse = function() {
@@ -102,7 +103,14 @@ pulse = function() {
 }
 var loadInterval = setInterval(pulse, 1000);
 
-
+$(".loadingSecure, .loadingNonSecure").hide();
+if(document.location.protocol == 'https:') {
+	$(".loadingSecure").show();
+} else if(document.location.protocol == "http:" || document.location.protocol == "file:") {
+	$(".loadingNonSecure").show();
+} else {
+	//Dude, what's your location protocol?
+}
 </script>
 <img src="img/logo.png" />
 
