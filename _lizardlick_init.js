@@ -28,8 +28,13 @@ app.rq.push(['templateFunction','productTemplate','onCompletes',function(P) {
 	var $tabContainer = $( ".tabbedProductContent",$('#productTemplate_'+safePID));
 		if($tabContainer.data("tabs")){} //tabs have already been instantiated. no need to be redundant.
 		else	{
+			
 			$(".tabs li a",$tabContainer).each(function (index) {
-				$(this).attr("href", "app://#spec_"+safePID+"_" + index.toString());            
+				if( $.browser.msie){
+					$(this).attr("href", "#spec_"+safePID+"_" + index.toString());            
+				} else {
+					$(this).attr("href", "app://#spec_"+safePID+"_" + index.toString());            
+				}
 			});
 			$("div.tabContent",$tabContainer).each(function (index) {
 				$(this).attr("id", "spec_"+safePID+"_" + index.toString());
