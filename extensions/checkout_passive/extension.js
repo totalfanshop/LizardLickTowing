@@ -1111,6 +1111,10 @@ two of it's children are rendered each time the panel is updated (the prodlist a
 //					app.u.dump(" -> chkoutCartSummary has no children. render entire panel.");
 					$container.append(app.renderFunctions.createTemplateInstance('checkoutTemplateCartSummaryPanel','chkoutCartSummary'));
 					}
+				else {
+					$('#chkoutCartSummary').remove();
+					$container.append(app.renderFunctions.createTemplateInstance('checkoutTemplateCartSummaryPanel','chkoutCartSummary'));
+				}
 				$('#checkoutStuffList').empty(); //since the template isn't getting generated empty each time, the item list must be manually emptied (or it will be appended to)
 //SANITY -> yes, the template only needs to be added once (above) but it needs to be translated each time this function is executed.
 				app.renderFunctions.translateTemplate(app.data.cartDetail,'chkoutCartSummary');
@@ -1367,7 +1371,8 @@ handleBill2Ship function added.
 //these changes need to be made before				
 
 				this.handleBill2Ship(); //will set ship vars if bill to ship is checked.
-				if(app.ext.store_checkout.u.taxShouldGetRecalculated())	{
+				//if(app.ext.store_checkout.u.taxShouldGetRecalculated())	{
+				if(true)	{
 //					app.u.dump(" -> saveCheckoutFields originated from addressFieldUpdated");
 					app.ext.convertSessionToOrder.calls.saveCheckoutFields.init(); //update session with ALL populated fields.
 					app.calls.refreshCart.init({"callback":"updateCheckoutOrderContents","extension":"convertSessionToOrder"},'immutable');
