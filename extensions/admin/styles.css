@@ -19,13 +19,22 @@ class can also be applied to a 1 item per row list.
 .alignLeft	{text-align:left;}
 .alignCenter	{text-align:center;}
 
+
+.valignTop	{vertical-align:top;}
+.valignMiddle	{vertical-align:middle;}
+
+/* hideForApp or Vstore gets toggle on based on account/domain setting. toggle on instead of off to avoid popping. */
+/* .showForVstoreOnly, .showForAppOnly	{display:none;} - not used yet. soon. */
+
 .displayNone	{display:none;}
 
 /* for use on lists where no bullets, indents, etc are needed. add on ul */
 /* .plainList	{margin:0; padding:0; list-style:none;} - deprecated. use list classes below */
 
-button.ui-button	{padding:2px 4px;} /* some default padding to add breathing room when text-only isn't used. keeps button small. */
-button.ui-button-text	{padding:2px 4px;} /*jqueryui uses a lot of spans for buttons. i like buttons. this is to handle padding on text only buttons */
+
+/* for small buttons */
+.smallButton .ui-button-text	{line-height:normal !important; font-size:.85em;} /* don't mess with padding. will effect icon buttons */
+
 .ui-selectee	{cursor:pointer;}
 
 .appMessage P	{padding:0; margin:0;} /* used in app messaging for warnings, alerts, successes, etc */
@@ -39,13 +48,31 @@ button.ui-button-text	{padding:2px 4px;} /*jqueryui uses a lot of spans for butt
 
 
 
+/* some positioning classes */
+
+.positionRelative	{position:relative;}
+.positionAbsolute	{position:absolute;}
+.positionTop	{top:0;}
+.positionRight	{right:0;}
+.positionLeft	{left:0;}
+.positionBottom	{bottom:0;}
+
+
 /*
 Generic text styles
 */
 .lineThrough	{text-decoration:line-through}
+.uppercase	{text-transform:uppercase;}
+.spacedLetters	{letter-spacing:.6em;}
 
+/* use these to indicate severity, where red is the highest alert state and green is the 'everything is dandy' state. */
+.red		{color:#660000;}
+.orange	{color:#F60;}
+.yellow	{color:#CC0;}
+.blue	{color:#000066;}
+.green	{color:#006600;}
 
-
+.smallTxt	{font-size:.75em;}
 
 /*
 some global padding and margins.
@@ -71,6 +98,7 @@ using these shared margins will help make the UI more consistent.
 .marginBottom	{margin-bottom:12px;}
 .stdMargin	{margin:12px;}
 .stdPadding	{padding:12px;}
+.smallPadding	{padding:4px;}
 section.marginBottom	{margin-bottom:36px;} /* use on a section tag to divide portions of the page. */
 
 
@@ -94,7 +122,10 @@ if you want the list responsive, apply the .fluidList class.
 /* for non-datagrid tables. ex: setup page. */
 table.stdCellSpacing	{border-spacing: 12px; border-collapse: separate;} 
 
-table.fullWidth	{width:100%;}
+table.fullWidth, iframe.fullWidth	{width:100%;}
+iframe.noBorders	{overflow:hidden; border:none;}
+
+iframe.ad-300x250	{height:250px;}
 
 /*
 Use this in a table where you want clear separation between rows and cells. This includes color differntiation in the rows. you don't need padded table set.
@@ -103,6 +134,10 @@ Use this in a table where you want clear separation between rows and cells. This
 .gridTable td, .gridTable th, .gridTable tf	{padding:2px 10px 2px 2px; vertical-align:top;}
 .gridTable tr:nth-child(odd)	{background:#ffffff;}
 .gridTable tr:nth-child(even)	{background:#f0f0f0;}
+
+.gridTable tr.ui-state-highlight	{background: inherit !important;}
+.gridTable tr.ui-state-highlight	{background: inherit !important;}
+
 .gridTable th, .gridTable .tf	{background:#cccccc;}
 
 
@@ -111,7 +146,8 @@ Use this in a table where you want clear separation between rows and cells. This
 /* a global 'handle' class for now. for consistency. 
 later if more variety is needed, we can either create exceptions or more rules to handle all cases.
 */
-.handle { background: #f8f8f8; position: absolute; right: 0; top: 0; bottom: 0; padding:14px 6px 0 6px; cursor:pointer; }
+.finderProdlistContainer .handle	{position: absolute; right: 0; top: 0; bottom: 0;background: #f8f8f8; padding:14px 6px 0 6px;}
+.handle { padding:6px; cursor:pointer; }
 
 .simpleListItem .removeProd, .simpleListItem .handle	{padding-top:3px;} /* less padding on top because lineitem is shorter (no image) */
 
@@ -139,8 +175,9 @@ li.loadingBG, tr.loadingBG	{background:url(images/wait.gif) no-repeat center cen
 .finderProdlistContainer .mpControls	{border:0; border-bottom-width:1px; line-height:24px;}
 
 
-
-
+/* use this in combo with ui-widget, ui-corner-all and ui-widget-content to create a horizontal bar of buttons with a container around them. */
+.ui-widget-buttonbar	{padding:3px 1px;} /* only 1 px on sides because button margin will add 2px */
+.ui-widget-buttonbar button	{margin:0 2px;}
 
 .ui-widget fieldset	{margin:0; padding:0; border:0;}
 .ui-widget h1  {font-size:1.6em; color:#000000; font-weight:bold; 	margin: 0; padding: 0;} /* Used for the page title element */
@@ -285,7 +322,7 @@ styles for lists that are selectable
 a background on the target element may require an implicit override here.
 */
 .ui-selecting, .finderProdlist li.ui-selecting { background: #eee; }
-.ui-selected , .finderProdlist li.ui-selected{ background: #def; !important }
+.ui-selected , .finderProdlist li.ui-selected{ background: #def !important ;}
 .targetList .ui-selected { background: #none; } /* add a class of targetList around any drop point so that the 'selected' background goes away */
 
 /* if a list is selectable and sortable, add an element with a handle class */
@@ -298,7 +335,6 @@ a background on the target element may require an implicit override here.
 
 /* the remove feature is only available on the target side */
 .finderResults .removeProd	{display:none;}
-
 
 
 
@@ -367,6 +403,43 @@ Messaging Styles
 .ui-icon-z-success	{background: url(images/success-25x25.png) no-repeat; width:25px; height:29px;}
 .ui-icon-z-debug	{background: url(images/debug-25x20.png) no-repeat; width:25px; height:24px;}
 .ui-icon-z-warn	{background:url(images/ise-25x22.png) no-repeat center center; width:29px; height:26px;}
+
+
+.anyIcon	{background:url(images/ui_anyicon_set-612x792.png) no-repeat; width:55px; height:55px; display:inline-block;}
+
+/* row 1 */
+.anyIconFloat	{background-position:0 0;}
+.anyIconTools	{background-position:-57px 0px;}
+.anyIconEnvelope	{background-position:-122px 0px;}
+.anyIconHeart	{background-position:-185px 0px;}
+.anyIconHeartAdd	{background-position:-250px 0px;}
+.anyIconDownload	{background-position:-315px 0px;}
+.anyIconGears	{background-position:-378px 0px;}
+.anyIconCertificate	{background-position:-438px 0px;}
+
+/* row 2 */
+.anyIconNetwork	{background-position:0 -60px;}
+.anyIconPage	{background-position:-57px -60px;}
+.anyIconBookmark	{background-position:-122px -60px;}
+.anyIconChain	{background-position:-185px -60px;}
+.anyIconMagGlass	{background-position:-250px -60px;}
+.anyIconPlusSign	{background-position:-315px -60px;}
+.anyIconI	{background-position:-378px -60px;}
+.anyIconMinusSign	{background-position:-438px -60px;}
+
+/* row 3 */
+
+
+
+/* row 5 */
+.anyIconVertArrows	{background-position:0 -280px;}
+.anyIconHorArrows	{background-position:-57px -280px;}
+
+
+/* row 6 */
+.anyIconMug	{background-position:0 -342px;}
+.anyIconComputer	{background-position:-438px -342px;}
+
 
 /*
 
@@ -445,6 +518,10 @@ DEBUGGER
 
 
 
+
+
+
+
 /*
 
 ########################################################
@@ -462,10 +539,57 @@ for use in forms where the label is the row container.
 put the prompt into a span
 <label><span>prompt</span>input</label>
 */
-.labelsAsBreaks label	{display:block; margin:6px 0; vertical-align:top;}
-.labelsAsBreaks label span	{padding-right:12px; display:inline-block; width:150px; vertical-align:top;}
-/*
-horrible idea to set defaults/globals. set as needed within an extension's css file.
-.labelsAsBreaks input	{width:250px;}
-.labelsAsBreaks textarea	{width:200px; height:250px;}
+.labelsAsBreaks label, .labelsAsBreaks div.label	{display:block; margin:6px 0; vertical-align:top;}
+.labelsAsBreaks label span	{padding-right:12px; display:inline-block; vertical-align:top;}
+
+/* 
+within a labelAsBreaks, if a row of inputs is needed, add a div with class label and clearfix around it and an h4 as the header. 
+add floatleft to each label inside the div
+see shipping panel in product editor for example
 */
+
+.labelsAsBreaks div.label h4	{margin:0; padding-right:24px; float:left; width:160px;}
+.labelsAsBreaks div.label label	{ margin:0 12px 0 0;}
+
+/* optional classes to put on same container that has labelsAsBreaks. Will make labels into a column and input into another, horizontally lined up. */
+.alignedLabels label span	{width:30%;}
+.alignedInputs textarea,
+.alignedInputs input[type=email],
+.alignedInputs input[type=url],
+.alignedInputs input[type=password],
+.alignedInputs input[type=text]	{width:65%;}
+
+.alignedInputs input[type=number], 
+.alignedInputs select	{max-width:65%;} /* shrink to fit widest option, but stay under threshold */
+
+
+
+
+
+
+/* landing page (aka recent news) */
+
+/* .pageLanding .ui-widget-content	{max-height:400px; overflow:auto; min-height:75px;} /* if/when browsers support it, check out  overflow-style */
+
+.pageLanding h2 .ui-button	{display:none;} /* temporarily disabled buttons till state is supported */
+
+/* three column panel layout (homepage) */
+#landingPageColumn1	{width:65%; float:left;}
+#landingPageColumn2	{width:33%; float:right;}
+
+#landingPageColumn2 .varImage	{max-width:300px; width:100%;}
+
+.recentNewsContainer	{height:450px; overflow:auto;}
+
+
+/* achievements page */
+table.achievementList	{width:60%; margin:0 auto; border-spacing: 0px; border-collapse: collapse;}
+.achievementList td	{vertical-align:top;border-bottom:1px solid #efefef; padding:6px 12px;}
+.achievementList p	{font-size:1em; margin:0px;}
+.achievementList h3	{font-size:1.5em; font-weight:normal; font-family: 'PT Sans', sans-serif;}
+
+/* account creation */
+fieldset.authNewAccountCreate	{width:400px; background:#ffffff;}
+
+/* ebay reports page */
+.ebayListingsReportPage fieldset.oneThird	{width:30%}

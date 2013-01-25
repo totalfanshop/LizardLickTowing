@@ -1,8 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>Zoovy.com - Administrative Interface Login (v201248)</title>
+<title>Zoovy.com - Administrative Interface Login</title>
 
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache"><!-- don't cache this file. -->
 <META NAME="ROBOTS" CONTENT="NONE">
@@ -21,21 +21,20 @@ else if (document.location.port == 8888) {
 	baseURL = '/';
 	}
 else {
-   baseURL = "//www.zoovy.com/biz/app/"
+   baseURL = "//www.zoovy.com/biz/app/";
    }
 
 var app = {vars:{
 	/////////////////////////////////\
-	"release":"20121213.2",   ///|> Increment this with each change. should solve caching issues. format: YYYYMMDD.X where X starts at 1 and is incremented w/ each daily change.
+	"release":"20130122.3",   ///|> Increment this with each change. should solve caching issues. format: YYYYMMDD.X where X starts at 1 and is incremented w/ each daily change.
 	//////////////////////////////////
 	"thisSessionIsAdmin": true,
 	"_clientid":"admin",
-	"jqurl":"https://www.zoovy.com/webapi/jquery/index.cgi",
+	"jqurl": "https://www.zoovy.com/webapi/jquery/index.cgi",
 //	"secureURL" : "https://www.zoovy.com",
 	"username": "", //needs to be set for header and media library. gets set in admin.initUserInterface
 	"baseURL" : baseURL,
 	},u:{},rq:[]};
-
 	
 </script>
 
@@ -44,8 +43,9 @@ all css includes need to be after the js that changes the base url.
 css files should be included before any .js file to ensure they are downloaded in parallel
 -->
 <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/cupertino/jquery-ui.css" />
-<link rel="STYLESHEET" type="text/css" href="https://www.zoovy.com/biz/todo-list.css" />
+<!-- <link rel="STYLESHEET" type="text/css" href="https://www.zoovy.com/biz/todo-list.css" /> -->
 <link rel="STYLESHEET" type="text/css" href="https://www.zoovy.com/biz/standard-20110317.css" />
+<link rel="STYLESHEET" type="text/css" href="extensions/admin/styles.css" /><!-- lots of UI specific styles. load early to avoid popping -->
 
 
 
@@ -68,14 +68,15 @@ body	{margin:0px; padding:0; background-color:#ffffff; background:url(https://ww
 </style>
 
 
-
-<!-- 
-these two need to be loaded here 
--->
 <script src="extensions/admin/resources/tmpl.min.js"></script><!-- required for media lib. loading in extension causes issues. -->
 <script src="extensions/admin/resources/load-image.min.js"></script><!-- required for media lib. loading in extension causes issues. -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<!-- not much is going to run without these two. load em early -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.js"></script>
+
+
 <script type="text/javascript" src="loadscript.js"></script>
 
 
@@ -142,23 +143,7 @@ app.u.loadScript(app.vars.baseURL+"admin_init.js");
 	</div>
 	
 	<div id='createAccountContainer' class='displayNone'>
-	<form name='merchantCreate' onSubmit="app.calls.authAccountCreate.init($(this).serializeJSON()); app.model.dispatchThis('immutable'); return false;">
-	<fieldset>
-		<legend>Create Account</legend>
-	
-		<div><label>Domain: <input type='text' name='domain' value='' required='required' /></label></div>
-		<div><label>Email: <input type='email' name='email' value='' required='required' /></label></div>
-		<div><label>First Name: <input type='text' name='firstname' value='' required='required' /></label></div>
-		<div><label>Last Name: <input type='text' name='lastname' value='' required='required' /></label></div>
-		<div><label>Company: <input type='text' name='company' value='' required='required' /></label></div>
-		<div><label>Phone: <input type='tel' name='phone' value='' required='required' /></label></div>
-		<div><label>Verify by: <select name='verification' required='required'>
-			<option value='sms'>SMS/Text Message</option>
-			<option value='voice'>Voice/phone call</option>
-		</select></label></div>
-		<input type='submit' value='create' />
-	</fieldset>
-	</form>
+
 	</div>
 
 </div>
@@ -176,6 +161,14 @@ app.u.loadScript(app.vars.baseURL+"admin_init.js");
 
 	</div>
 </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -228,10 +221,10 @@ You are Logged in as: <span class='username'></span> <span class='domain lookLik
 		<li  class='off sitesTab'><a href="#/biz/sites/index.cgi" onClick="return navigateTo('#:sites');"  class='bindByAnchor' title='List your stores by domain, profile or partition.  Handy.'><span>sites</span></a></li>
 		<li  class='off displayNone jtTab' id='jtSectionTab'><a href='/biz/jt/index.cgi'  class='bindByAnchor' title='List your stores by domain, profile or partition.  Handy.'><span>JT</span></a></li>
 		<li  class='off productTab'><a href="#/biz/product/" onClick="return navigateTo('#:product');"  class='bindByAnchor' title='Create, edit or syndicate your products. Manage options and other product related information.'><span>products</span></a></li>
-		<li  class='off ordersTab'><a href="#/biz/orders/index.cgi" onClick="return navigateTo('#:orders');"  class='bindByAnchor' title='Manage your orders here.'><span>orders</span></a></li>
+
 		
-		<li  class='off orders2Tab'><a href="#!orders" class='bindByAnchor' title='Manage your orders here.'><span>orders (new)</span></a></li>
-		
+		<li  class='off ordersTab'><a href="#!orders" class='bindByAnchor' title='Manage your orders here.'><span>orders</span></a></li>
+		<li  class='off ordersTab'><a href="#/biz/orders/index.cgi" onClick="return navigateTo('#:orders');"  class='bindByAnchor' title='Manage your orders here.'><span>orders (old)</span></a></li>		
 		<li  class='off crmTab'><a href="#/biz/crm/index.cgi" onClick="return navigateTo('#:crm');"  class='bindByAnchor' title='Manage customer requests and feedback submitted through your storefront'><span>crm</span></a></li>
 		<li  class='off syndicationTab'><a href="#/biz/syndication/index.cgi" onClick="return navigateTo('#:syndication');"  class='bindByAnchor' title='Launch and mangage your marketplace syndication feeds.'><span>syndication</span></a></li>
 		<li  class='off reportsTab'><a href="#/biz/reports/index.cgi" onClick="return navigateTo('#:reports');"  class='bindByAnchor' title='A plethora of reporting tools to help you analyze your sales' ><span>reports</span></a></li>
@@ -270,7 +263,7 @@ You are Logged in as: <span class='username'></span> <span class='domain lookLik
 	<div id='sitesContent' class='displayNone tabContent' data-section='sites'></div>
 	<div id='productContent' class='displayNone tabContent' data-section='product'></div>
 	<div id='ordersContent' class='displayNone tabContent' data-section='orders'></div>
-	<div id='orders2Content' class='displayNone tabContent' data-section='orders'></div>
+	<div id='orders2Content' class='displayNone tabContent' data-section='orders2'></div>
 	<div id='crmContent' class='displayNone tabContent' data-section='crm'></div>
 	<div id='syndicationContent' class='displayNone tabContent' data-section='syndication'></div>
 	<div id='reportsContent' class='displayNone tabContent' data-section='reports'></div>
@@ -376,23 +369,34 @@ These two pieces of data are used for mapping after the uploads to set what fold
 
 
 
-
-
-
 <div id='debugPanel' class='debug buttonset clearBoth clearAll clearfix'>
 	<div class='debugBG'></div>
 	<div class='debugContent'>
 <button onClick="localStorage.clear();">Nuke LocalStorage</button>
 
-<button onClick="app.model.addDispatchToQ({'_cmd':'appResource','filename':'email_macros.json'},'mutable'); app.model.dispatchThis('mutable');">resource</button>
+<button onClick="app.ext.admin.a.showLandingPage();">showLandingPage</button>
+<button onClick="app.ext.admin_user.a.showUserManager();">User Manager</button>
+<button onClick="app.ext.admin_user.a.showAppChooser();">User Manager</button>
 
-<button onClick="app.model.addDispatchToQ({'_cmd':'adminImageList','keyword':'square','detail':'FOLDER'},'mutable'); app.model.dispatchThis('mutable');">media lib search</button>
 
-<button onClick="app.ext.admin_support.a.showFileUploadInModal('169999');">showFileUploadInModal</button>
 
-<button onClick="app.u.dump($('#productTabMainContent').data());">$('#productTabMainContent').data()</button>
+<button onClick="app.ext.admin.calls.bossUserDetail.init('lisas',{},'mutable'); app.model.dispatchThis('mutable');">bossUserDetail</button>
+
+
+<button onClick="$('#loginFormContainer').toggle(); app.ext.admin.a.showAuthNewAccountCreate($('#createAccountContainer'));">showAuthNewAccountCreate</button>
+<button onClick="$('#setupContent').empty(); app.ext.admin.a.showAchievementList($('#setupContent'));">showAchievementList</button>
+
+<button onClick="app.model.addDispatchToQ({'_cmd':'adminDataQuery','query':'listing-active','since_gmt':app.u.unixNow() - (60*60*24*10)},'mutable'); app.model.dispatchThis('mutable');">adminDataQuery</button>
+
+
+
+<button onClick="app.model.addDispatchToQ({'_cmd':'appResource','filename':'recentnews.json'},'mutable'); app.model.dispatchThis('mutable');">resource</button>
+<button onClick="app.model.addDispatchToQ({'_cmd':'appResource','filename':'quickstats.json'},'mutable'); app.model.dispatchThis('mutable');">quickstats</button>
 
 <button onClick="app.ext.admin.calls.appConfig.init(); app.model.dispatchThis();">appConfig</button>
+
+<button onClick="app.ext.admin.u.handlePermissions($('#setupContent'),{'isVstore':true})">handlePermssions</button>
+
 <!-- 
 
 <button onClick="app.ext.admin_batchJob.a.showBatchJobStatus('342679');">adminBatchJobStatus</button>
@@ -406,6 +410,52 @@ These two pieces of data are used for mapping after the uploads to set what fold
 <button onClick="app.ext.convertSessionToOrder.a.openCreateOrderForm();">Create Order</button>
 	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+This is content that isn't template worthy, but still necessary (most likely for modals or static pages)
+
+-->
+
+
+
+<div id='achievementAddProductModal' class='achievementModal displayNone' title="Achievement: Add a product">
+
+	<table>
+	<tr>
+		<td></td>
+		<td>
+		<h2>Add some product to your store</h2>
+		<p>For the purpose of this achievement, there are three ways to get product into your store (in actuality, there are more).</p>
+		<ol>
+			<li>Using the product editor</li>
+			<li>Through a CSV import</li>
+			<li>Add test product</li>
+		</ol>
+		
+		<p>#1. This is the manual process, but fairly simple.  Click the product tab and then the 'create new' link on the left. Fill in the appropriate fields and press save. That's all there is to it. Once the product is created, go into the editor to add pictures and more detailed information.<br />
+		Watch | <a href='http://www.zoovy.com/webdoc/index.cgi?VERB=DOC&DOCID=50788' target='webdoc' class='webdoc'>Read</a></p>
+		<p>#2. For adding in bulk, this is the best way to do it. Prepare your CSV with the appropriate headers (described in the link below) and then import through setup > import tools.<br />
+		Watch | <a href='http://www.zoovy.com/webdoc/index.cgi?VERB=DOC&DOCID=50285' target="webdoc" class='webdoc'>Read</a></p>
+		<p>#3. By far the easiest method, but also the least likely to get you selling (good for testing purposes). Simply click the link below and we'll add a few sample product to your store.<br />
+		Watch | Read | Do It!</p>
+		</td>
+	</tr>
+	</table>
+
+</div>
+
+
 
 
 
